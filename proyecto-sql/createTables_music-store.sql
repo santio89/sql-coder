@@ -63,7 +63,7 @@ create table if not exists carritos (
 );
 
 -- tabla de pedidos. al confirmar una orden, la informacion del carrito pasa al pedido (y el carrito se vacia)
-CREATE TABLE IF NOT EXISTS pedidos (
+create table if not exists pedidos (
     id_pedido INT NOT NULL AUTO_INCREMENT,
     id_usuario INT NOT NULL,
     productos TEXT,
