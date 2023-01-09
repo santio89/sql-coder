@@ -1,3 +1,5 @@
+use musicstore;
+
 -- buscar cantidad de usuarios por pais
 CREATE OR REPLACE VIEW view_usuariosPais AS
     (SELECT 
