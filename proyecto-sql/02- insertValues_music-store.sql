@@ -72,6 +72,24 @@ INSERT INTO stock VALUES
 (NULL, 14, 80, 0),
 (NULL, 15, 22, 0);
 
+INSERT INTO compras VALUES
+(NULL, 1, 1000, 30),
+(NULL, 2, 800, 22),
+(NULL, 3, 500, 15),
+(NULL, 4, 1000, 30),
+(NULL, 5, 1000, 17),
+(NULL, 6, 1000, 20),
+(NULL, 7, 700, 23),
+(NULL, 8, 1000, 30),
+(NULL, 9, 1000, 10),
+(NULL, 10, 600, 14),
+(NULL, 11, 1000, 12),
+(NULL, 12, 1000, 25),
+(NULL, 13, 400, 30),
+(NULL, 14, 1000, 30),
+(NULL, 15, 900, 30);
+
+
 
 INSERT INTO carritos VALUES
 (NULL, 1, "[{id: 1, cant: 2}, {id: 2, cant: 1}, {id: 5, cant: 2}]"),

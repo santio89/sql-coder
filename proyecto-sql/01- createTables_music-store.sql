@@ -53,6 +53,16 @@ primary key (id_stock),
 foreign key (id_disco) references discos (id_disco) on delete cascade
 );
 
+-- tabla compras con detalle de la compra de discos para stock
+create table if not exists compras (
+id_compra int not null auto_increment,
+id_disco int not null,
+cantidad_compra int not null,
+precio_compra_unit decimal not null,
+primary key (id_compra),
+foreign key (id_disco) references discos (id_disco) on delete cascade
+);
+
 -- tabla de carritos con los productos que el usuario selecciona dentro de la pagina y antes de finalizar la compra.
 create table if not exists carritos (
 	id_carrito int not null auto_increment,
