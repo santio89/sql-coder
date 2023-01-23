@@ -1,5 +1,24 @@
 USE MUSICSTORE;
 
+INSERT INTO empleados VALUES 
+(NULL, 24512812, "Juan", "Gomez", "juangm123@fake.com", "+545244912", "2010-01-02", "gerencia"),
+(NULL, 34515822, "Carlos", "Gomez", "juangm123@fake.com", "+545243915", "2010-01-01", "gerencia"),
+(NULL, 44512312, "Laura", "Perez", "juangm123@fake.com", "+545243415", "2010-01-01", "rrhh"),
+(NULL, 22712812, "Maria", "Guzman", "juangm123@fake.com", "+545143915", "2010-03-01", "rrhh"),
+(NULL, 20572812, "Veronica", "Piñeiro", "juangm123@fake.com", "+545343915", "2010-03-01", "tesoreria"),
+(NULL, 14512312, "Martin", "Reyes", "juangm123@fake.com", "+545243315", "2010-03-01", "tesoreria"),
+(NULL, 13412812, "Ricardo", "Gonzalez", "juangm123@fake.com", "+545263915", "2010-04-01", "sistemas"),
+(NULL, 14515312, "Mateo", "Oliva", "juangm123@fake.com", "+545247915", "2010-04-01", "sistemas"),
+(NULL, 22312202, "Matias", "Ruiz", "juangm123@fake.com", "+545233915", "2010-04-01", "ventas"),
+(NULL, 34612211, "Pedro", "Payeres", "juangm123@fake.com", "+545213915", "2010-07-01", "ventas"),
+(NULL, 21512112, "Lautaro", "Sanchez", "juangm123@fake.com", "+545243912", "2010-07-01", "ventas"),
+(NULL, 16312811, "Victoria", "Gonzalez", "juangm123@fake.com", "+545243913", "2010-07-01", "ventas"),
+(NULL, 15512812, "Mercedes", "Fernandez", "juangm123@fake.com", "+545243911", "2010-08-01", "ventas"),
+(NULL, 17312812, "Julieta", "Gomez", "juangm123@fake.com", "+545243917", "2010-08-01", "ventas"),
+(NULL, 19412812, "Juana", "Fernandez", "juangm123@fake.com", "+544243015", "2010-09-01", "ventas");
+
+
+
 INSERT INTO usuarios VALUES 
 (NULL, "Juan Carlos", "Perez Figueroa", "juanpf@fake.com", "+544247945", "2022-03-25", "http://fake.com/avatarjuanpf01", "admin"),
 (NULL, "Maria Laura", "Gutierrez", "marial@fake.com", "+544143245", "2020-05-30", "http://fake.com/avatarmarial01", "user"),
@@ -73,21 +92,21 @@ INSERT INTO stock VALUES
 (NULL, 15, 22, 0);
 
 INSERT INTO compras VALUES
-(NULL, 1, 1000, 30),
-(NULL, 2, 800, 22),
-(NULL, 3, 500, 15),
-(NULL, 4, 1000, 30),
-(NULL, 5, 1000, 17),
-(NULL, 6, 1000, 20),
-(NULL, 7, 700, 23),
-(NULL, 8, 1000, 30),
-(NULL, 9, 1000, 10),
-(NULL, 10, 600, 14),
-(NULL, 11, 1000, 12),
-(NULL, 12, 1000, 25),
-(NULL, 13, 400, 30),
-(NULL, 14, 1000, 30),
-(NULL, 15, 900, 30);
+(NULL, 1, 1000, 30, 9),
+(NULL, 2, 800, 22, 9),
+(NULL, 3, 500, 15, 10),
+(NULL, 4, 1000, 30, 11),
+(NULL, 5, 1000, 17, 10),
+(NULL, 6, 1000, 20, 12),
+(NULL, 7, 700, 23, 13),
+(NULL, 8, 1000, 30, 14),
+(NULL, 9, 1000, 10, 9),
+(NULL, 10, 600, 14, 11),
+(NULL, 11, 1000, 12, 12),
+(NULL, 12, 1000, 25, 15),
+(NULL, 13, 400, 30, 9),
+(NULL, 14, 1000, 30, 11),
+(NULL, 15, 900, 30, 14);
 
 
 
@@ -124,6 +143,23 @@ INSERT INTO pedidos VALUES
 (NULL, 4, "[{id: 11, cant: 2}]", "2022-11-02"),
 (NULL, 2, "[{id: 12, cant: 1}, {id: 7, cant: 2}, {id: 5, cant: 1}]", "2022-11-21"),
 (NULL, 15, "[{id: 14, cant: 1}]", "2022-11-17");
+
+INSERT INTO ventas VALUES
+(NULL, 1, 2, "2023-01-01"),
+(NULL, 1, 2, "2022-12-02"),
+(NULL, 4, 3, "2023-01-02"),
+(NULL, 3, 1, "2023-01-14"),
+(NULL, 1, 2, "2022-11-02"),
+(NULL, 2, 11, "2023-01-03"),
+(NULL, 3, 14, "2022-12-02"),
+(NULL, 6, 12, "2022-11-02"),
+(NULL, 7, 15, "2023-01-12"),
+(NULL, 9, 1, "2022-11-02"),
+(NULL, 11, 1, "2022-08-22"),
+(NULL, 1, 3, "2023-01-17"),
+(NULL, 3, 3, "2022-11-02"),
+(NULL, 2, 2, "2022-11-21"),
+(NULL, 4, 2, "2023-01-01");
 
 
 INSERT INTO mensajes VALUES

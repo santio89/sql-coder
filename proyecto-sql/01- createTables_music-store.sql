@@ -2,7 +2,21 @@ drop schema if exists MusicStore;
 create schema if not exists MusicStore;
 use MusicStore;
 
--- tabla usuarios con información básica
+
+-- tabla empleados, quienes gestionan compras y cargan productos a la plataforma online
+create table if not exists empleados (
+id_empleado int not null auto_increment,
+dni_empleado int not null,
+nombre varchar (100) not null,
+apellido varchar (100) not null,
+email varchar (100) not null,
+telefono varchar (100) not null,
+fecha_alta date not null,
+sector varchar (100),
+primary key (id_empleado)
+);
+
+-- tabla usuarios de la plataforma online con información básica
 create table if not exists usuarios (
 id_usuario int not null auto_increment,
 nombre varchar (100) not null,
@@ -15,7 +29,7 @@ rol varchar (20) not null,
 primary key (id_usuario)
 );
 
--- tabla direcciones con informacion detallada de las direcciones
+-- tabla direcciones con informacion detallada de las direcciones de usuarios de la plataforma online
 create table if not exists direcciones (
 id_direccion int not null auto_increment,
 id_usuario int not null,
@@ -43,7 +57,19 @@ fecha_carga date not null,
 primary key (id_disco)
 );
 
--- tabla stock con cantidad de productos y descuento
+-- tabla compras con detalle de las compras de discos que realiza la empresa para stockear
+create table if not exists compras (
+id_compra int not null auto_increment,
+id_disco int not null,
+cantidad_compra int not null,
+precio_compra_unit decimal not null,
+comprado_por int not null,
+primary key (id_compra),
+foreign key (id_disco) references discos (id_disco),
+foreign key (comprado_por) references empleados (id_empleado)
+);
+
+-- tabla stock con cantidad de productos y descuento (stock es lo disponible para venta, a diferencia de compras que es una gestion más bien comercial y antes de recibir el producto)
 create table if not exists stock (
 id_stock int not null auto_increment,
 id_disco int not null,
@@ -53,17 +79,7 @@ primary key (id_stock),
 foreign key (id_disco) references discos (id_disco) on delete cascade
 );
 
--- tabla compras con detalle de la compra de discos para stock
-create table if not exists compras (
-id_compra int not null auto_increment,
-id_disco int not null,
-cantidad_compra int not null,
-precio_compra_unit decimal not null,
-primary key (id_compra),
-foreign key (id_disco) references discos (id_disco) on delete cascade
-);
-
--- tabla de carritos con los productos que el usuario selecciona dentro de la pagina y antes de finalizar la compra.
+-- tabla de carritos de la plataforma online con los productos que el usuario selecciona dentro de la pagina y antes de finalizar la compra.
 create table if not exists carritos (
 	id_carrito int not null auto_increment,
     id_usuario int not null,
@@ -72,15 +88,25 @@ create table if not exists carritos (
     foreign key (id_usuario) references usuarios (id_usuario) on delete cascade
 );
 
--- tabla de pedidos. al confirmar una orden, la informacion del carrito pasa al pedido (y el carrito se vacia)
+-- tabla de pedidos que recibe el sistema desde la plataforma online. al confirmar una orden, la informacion del carrito pasa al pedido,el carrito se vacia y el pedido pasa al sector de ventas quienes gestionaran el mismo.
 create table if not exists pedidos (
     id_pedido INT NOT NULL AUTO_INCREMENT,
     id_usuario INT NOT NULL,
     productos TEXT,
     fecha_compra DATE NOT NULL,
     PRIMARY KEY (id_pedido),
-    FOREIGN KEY (id_usuario)
-        REFERENCES usuarios (id_usuario) on delete cascade
+    FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario) on delete cascade
+);
+
+-- tabla de ventas con los productos vendidos (a partir de los pedidos, el sector ventas gestiona la operacion)
+create table if not exists ventas (
+    id_venta INT NOT NULL AUTO_INCREMENT,
+    id_usuario INT NOT NULL,
+    id_disco int not null,
+    fecha_venta DATE NOT NULL,
+    PRIMARY KEY (id_venta),
+    FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario),
+    FOREIGN KEY (id_disco) references discos (id_disco)
 );
 
 -- tabla de mensajes que son enviados desde los usuarios hacia el administrador

@@ -1,5 +1,8 @@
 use mysql;
 
+drop user if exists "juanp@localhost";
+drop user if exists "marian@localhost";
+
 -- creo usuarios
 create user "juanp@localhost" identified by "pasS13!";
 create user "marian@localhost" identified by "paSs27$";
