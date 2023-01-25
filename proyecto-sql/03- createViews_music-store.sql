@@ -72,5 +72,10 @@ CREATE OR REPLACE VIEW view_sesionesActivas AS
     WHERE
         sesiones.sesionCryptId IS NOT NULL);
         
-  
+  -- buscar tabla ventas con detalle de precio y cantidad
+  CREATE OR REPLACE VIEW view_ventasDetalle as
+	(SELECT id_pedido, id_usuario, discos.id_disco, discos.precio, cantidad 
+    FROM ventas JOIN discos ON ventas.id_disco = discos.id_disco
+    ORDER BY id_pedido
+    )
 

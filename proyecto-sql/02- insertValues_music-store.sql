@@ -75,21 +75,21 @@ INSERT INTO discos VALUES
 
 
 INSERT INTO stock VALUES 
-(NULL, 1, 123, 0),
-(NULL, 2, 93, 10),
-(NULL, 3, 150, 10),
-(NULL, 4, 80, 0),
-(NULL, 5, 15, 0),
-(NULL, 6, 133, 10),
-(NULL, 7, 53, 10),
-(NULL, 8, 200, 20),
-(NULL, 9, 100, 0),
-(NULL, 10, 150, 0),
-(NULL, 11, 133, 10),
-(NULL, 12, 53, 0),
-(NULL, 13, 150, 10),
-(NULL, 14, 80, 0),
-(NULL, 15, 22, 0);
+(NULL, 1, 123),
+(NULL, 2, 93),
+(NULL, 3, 150),
+(NULL, 4, 80),
+(NULL, 5, 15),
+(NULL, 6, 133),
+(NULL, 7, 53),
+(NULL, 8, 200),
+(NULL, 9, 100),
+(NULL, 10, 150),
+(NULL, 11, 133),
+(NULL, 12, 53),
+(NULL, 13, 150),
+(NULL, 14, 80),
+(NULL, 15, 22);
 
 INSERT INTO compras VALUES
 (NULL, 1, 1000, 30, 9),

@@ -74,7 +74,6 @@ create table if not exists stock (
 id_stock int not null auto_increment,
 id_disco int not null,
 cantidad_stock int not null,
-descuento decimal not null,
 primary key (id_stock),
 foreign key (id_disco) references discos (id_disco) on delete cascade
 );
