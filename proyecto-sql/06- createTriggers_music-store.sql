@@ -1,5 +1,43 @@
 use musicstore;
 
+-- tabla de ventas con los productos vendidos (a partir de los pedidos que se reciben en formato json desde el front-end, se genera la tabla de ventas)
+create table if not exists ventas (
+    id_venta INT NOT NULL AUTO_INCREMENT,
+    id_pedido INT NOT NULL,
+    id_usuario INT NOT NULL,
+    id_disco int not null,
+    cantidad int not null,
+    fecha_venta DATE NOT NULL,
+    PRIMARY KEY (id_venta),
+    FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario),
+    FOREIGN KEY (id_disco) references discos (id_disco),
+    FOREIGN KEY (id_pedido) references pedidos (id_pedido)
+);
+
+--  trigger after insert de pedidos, generando la tabla de ventas
+DROP TRIGGER IF EXISTS tr_after_insertPedido_venta;
+DELIMITER //
+CREATE TRIGGER tr_after_insertPedido_venta
+AFTER INSERT  ON pedidos
+FOR EACH ROW
+BEGIN
+	DECLARE iddisco int;
+    DECLARE cantidad int;
+
+	DECLARE i INT DEFAULT 0;
+    WHILE i < JSON_LENGTH(new.productos) DO
+        SELECT JSON_EXTRACT(new.productos, CONCAT('$[',i,'].id')) INTO iddisco;
+        SELECT JSON_EXTRACT(new.productos, CONCAT('$[',i,'].cant')) INTO cantidad;
+        
+		INSERT INTO ventas VALUES(
+		NULL, new.id_pedido, new.id_usuario, CAST(iddisco AS UNSIGNED), CAST(cantidad AS UNSIGNED), new.fecha_pedido
+		);
+
+        SET i = i + 1;
+    END WHILE;
+END
+// DELIMITER ;
+
 
 -- tabla: log usuarios - before
 create table if not exists log_usuarios_before(
@@ -9,6 +47,7 @@ operation varchar(10),
 hecho_por varchar(255),
 primary key (id_logUsuarioBefore)
 );
+
 
 -- trigger before insert (tabla log_usuarios_before)
 DROP TRIGGER IF EXISTS tr_before_insertUsuario_log;

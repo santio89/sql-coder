@@ -83,7 +83,7 @@ foreign key (id_disco) references discos (id_disco) on delete cascade
 create table if not exists carritos (
 	id_carrito int not null auto_increment,
     id_usuario int not null,
-    productos text,
+    productos json,
     primary key (id_carrito),
     foreign key (id_usuario) references usuarios (id_usuario) on delete cascade
 );
@@ -92,21 +92,10 @@ create table if not exists carritos (
 create table if not exists pedidos (
     id_pedido INT NOT NULL AUTO_INCREMENT,
     id_usuario INT NOT NULL,
-    productos TEXT,
-    fecha_compra DATE NOT NULL,
+    productos JSON,
+    fecha_pedido DATE NOT NULL,
     PRIMARY KEY (id_pedido),
-    FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario) on delete cascade
-);
-
--- tabla de ventas con los productos vendidos (a partir de los pedidos, el sector ventas gestiona la operacion)
-create table if not exists ventas (
-    id_venta INT NOT NULL AUTO_INCREMENT,
-    id_usuario INT NOT NULL,
-    id_disco int not null,
-    fecha_venta DATE NOT NULL,
-    PRIMARY KEY (id_venta),
-    FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario),
-    FOREIGN KEY (id_disco) references discos (id_disco)
+    FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario)
 );
 
 -- tabla de mensajes que son enviados desde los usuarios hacia el administrador
