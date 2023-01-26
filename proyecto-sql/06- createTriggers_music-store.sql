@@ -10,8 +10,8 @@ create table if not exists ventas (
     fecha_venta DATE NOT NULL,
     PRIMARY KEY (id_venta),
     FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario),
-    FOREIGN KEY (id_disco) references discos (id_disco),
-    FOREIGN KEY (id_pedido) references pedidos (id_pedido)
+    FOREIGN KEY (id_disco) REFERENCES discos (id_disco),
+    FOREIGN KEY (id_pedido) REFERENCES pedidos (id_pedido)
 );
 --  trigger after insert de pedidos, generando la tabla de ventas
 DROP TRIGGER IF EXISTS tr_after_insertPedido_venta;

@@ -42,20 +42,6 @@ CREATE OR REPLACE VIEW view_usuariosPedidos AS
     GROUP BY usuarios.id_usuario
     ORDER BY COUNT(pedidos.id_usuario) DESC);
 
--- buscar discos con descuentos
-/*CREATE OR REPLACE VIEW view_discosDescuentos AS
-    (SELECT 
-        discos.id_disco,
-        nombre,
-        banda,
-        stock.descuento AS porcentaje_descuento
-    FROM
-        DISCOS
-            JOIN
-        STOCK ON discos.id_disco = stock.id_disco
-    WHERE
-        stock.descuento != 0);
-        */
 
 -- buscar usuarios con sesiones activas. nota: en la realidad, las sesiones se irian anulando (NULL) a medida que expiran, y las activas deberian tener una fecha de expiracion actual (esto se realizaría dinámicamente desde un backend), pero para el ejemplo tomo los cryptId 'not null' como sesiones activas màs alla de la fecha.
 CREATE OR REPLACE VIEW view_sesionesActivas AS

@@ -3,7 +3,7 @@ use musicstore
 
 -- convertir precio de dolares (como el precio de los discos) a pesos argentinos
 -- uso ej: SELECT fn_precioPesos(2)
-DROP FUNCTION IF EXISTS fn_precioPesos
+DROP FUNCTION IF EXISTS fn_precioPesos;
 DELIMITER //
 CREATE FUNCTION fn_precioPesos (precioDol DECIMAL(20,2))
 RETURNS DECIMAL(20,2)
@@ -17,7 +17,7 @@ END
 
 -- buscar cantidad de pedidos por pais
 -- uso ej: SELECT fn_pedidosPais("ARGENTINA")
-DROP FUNCTION IF EXISTS fn_pedidosPais
+DROP FUNCTION IF EXISTS fn_pedidosPais;
 DELIMITER //
 CREATE FUNCTION fn_pedidosPais (pais VARCHAR(100))
 RETURNS INT
@@ -30,7 +30,7 @@ END
 
 -- buscar cantidad de pedidos por usuario
 -- uso ej: SELECT fn_pedidosUsuario("juanpf@fake.com")
-DROP FUNCTION IF EXISTS fn_pedidosUsuario
+DROP FUNCTION IF EXISTS fn_pedidosUsuario;
 DELIMITER //
 CREATE FUNCTION fn_pedidosUsuario (emailUsuario VARCHAR(100))
 RETURNS INT
@@ -41,3 +41,16 @@ END
 // DELIMITER ;
 
 
+-- buscar cantidad de items (discos) comprados por usuario
+-- uso ej: SELECT fn_pedidosUsuario("juanpf@fake.com")
+/*
+DROP FUNCTION IF EXISTS fn_itemsUsuario
+DELIMITER //
+CREATE FUNCTION fn_itemsUsuario (emailUsuario VARCHAR(100))
+RETURNS INT
+DETERMINISTIC
+BEGIN
+	RETURN (SELECT SUM(cantidad) FROM ventas WHERE ventas.id_usuario IN (SELECT usuarios.id_usuario FROM usuarios WHERE usuarios.email=emailUsuario));
+END 
+// DELIMITER ;
+*/
