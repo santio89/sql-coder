@@ -43,7 +43,7 @@ CREATE OR REPLACE VIEW view_usuariosPedidos AS
     ORDER BY COUNT(pedidos.id_usuario) DESC);
 
 -- buscar discos con descuentos
-CREATE OR REPLACE VIEW view_discosDescuentos AS
+/*CREATE OR REPLACE VIEW view_discosDescuentos AS
     (SELECT 
         discos.id_disco,
         nombre,
@@ -55,6 +55,7 @@ CREATE OR REPLACE VIEW view_discosDescuentos AS
         STOCK ON discos.id_disco = stock.id_disco
     WHERE
         stock.descuento != 0);
+        */
 
 -- buscar usuarios con sesiones activas. nota: en la realidad, las sesiones se irian anulando (NULL) a medida que expiran, y las activas deberian tener una fecha de expiracion actual (esto se realizaría dinámicamente desde un backend), pero para el ejemplo tomo los cryptId 'not null' como sesiones activas màs alla de la fecha.
 CREATE OR REPLACE VIEW view_sesionesActivas AS
@@ -73,9 +74,19 @@ CREATE OR REPLACE VIEW view_sesionesActivas AS
         sesiones.sesionCryptId IS NOT NULL);
         
   -- buscar tabla ventas con detalle de precio y cantidad
-  CREATE OR REPLACE VIEW view_ventasDetalle as
-	(SELECT id_pedido, id_usuario, discos.id_disco, discos.precio, cantidad 
+  CREATE OR REPLACE VIEW view_ventasDetalle AS
+	(SELECT id_venta, id_pedido, id_usuario, discos.id_disco, discos.precio, cantidad, discos.precio*cantidad AS subtotal_venta 
     FROM ventas JOIN discos ON ventas.id_disco = discos.id_disco
     ORDER BY id_pedido
-    )
+    );
 
+-- total vendido
+CREATE OR REPLACE VIEW view_totalVendido AS
+    (SELECT 
+        COUNT(DISTINCT id_pedido) AS cantidad_pedidos,
+        SUM(cantidad) AS items_vendidos,
+        SUM(discos.precio * cantidad) AS total_vendido
+    FROM
+        ventas
+            JOIN
+        discos ON ventas.id_disco = discos.id_disco);
