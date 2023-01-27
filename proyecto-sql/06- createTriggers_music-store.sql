@@ -13,7 +13,7 @@ create table if not exists ventas (
     FOREIGN KEY (id_disco) REFERENCES discos (id_disco),
     FOREIGN KEY (id_pedido) REFERENCES pedidos (id_pedido)
 );
---  trigger after insert de pedidos, generando la tabla de ventas
+-- trigger after insert de pedidos, generando la tabla de ventas
 DROP TRIGGER IF EXISTS tr_after_insertPedido_venta;
 DELIMITER //
 CREATE TRIGGER tr_after_insertPedido_venta

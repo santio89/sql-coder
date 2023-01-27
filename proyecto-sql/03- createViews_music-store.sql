@@ -76,3 +76,10 @@ CREATE OR REPLACE VIEW view_totalVendido AS
         ventas
             JOIN
         discos ON ventas.id_disco = discos.id_disco);
+        
+        
+-- compras realizadas por empleados para stock
+CREATE OR REPLACE VIEW view_comprasEmpleados AS
+(
+	SELECT comprado_por AS id_empleado, CONCAT(empleados.nombre, " ", empleados.apellido) AS nombre_completo,COUNT(comprado_por) AS cantidad_compras, SUM(cantidad_compra) AS items_comprados, SUM(precio_compra_unit * cantidad_compra) AS costo_total FROM compras JOIN empleados ON compras.comprado_por = empleados.id_empleado GROUP BY comprado_por ORDER BY cantidad_compras DESC
+)

@@ -1,4 +1,4 @@
-use musicstore
+use musicstore;
 
 
 -- convertir precio de dolares (como el precio de los discos) a pesos argentinos
@@ -42,9 +42,9 @@ END
 
 
 -- buscar cantidad de items (discos) comprados por usuario
--- uso ej: SELECT fn_pedidosUsuario("juanpf@fake.com")
-/*
-DROP FUNCTION IF EXISTS fn_itemsUsuario
+-- uso ej: SELECT fn_itemsUsuario("juanpf@fake.com") 
+
+DROP FUNCTION IF EXISTS fn_itemsUsuario;
 DELIMITER //
 CREATE FUNCTION fn_itemsUsuario (emailUsuario VARCHAR(100))
 RETURNS INT
@@ -53,4 +53,30 @@ BEGIN
 	RETURN (SELECT SUM(cantidad) FROM ventas WHERE ventas.id_usuario IN (SELECT usuarios.id_usuario FROM usuarios WHERE usuarios.email=emailUsuario));
 END 
 // DELIMITER ;
-*/
+
+
+-- buscar cantidad de items comprados por empleado, para stock
+-- uso ej: SELECT fn_itemsEmpleadoStock("juangm123@fake.com") 
+DROP FUNCTION IF EXISTS fn_itemsEmpleadoStock;
+DELIMITER //
+CREATE FUNCTION fn_itemsEmpleadoStock (emailEmpleado VARCHAR(100))
+RETURNS INT
+DETERMINISTIC
+BEGIN
+	RETURN (SELECT SUM(cantidad_compra) AS cantidad_itemsComprados FROM compras WHERE compras.comprado_por IN (SELECT empleados.id_empleado FROM empleados WHERE empleados.email=emailEmpleado));
+END 
+// DELIMITER ;
+
+
+-- calcular la diferencia entre el total vendido y el total comprado para stock
+-- uso ej: SELECT fn_totalBalance()
+DROP FUNCTION IF EXISTS fn_totalBalance;
+DELIMITER //
+CREATE FUNCTION fn_totalBalance()
+RETURNS DECIMAL
+DETERMINISTIC
+
+BEGIN
+	RETURN (SELECT (SELECT total_vendido FROM view_totalVendido) - (SELECT total_comprado FROM view_totalComprado) AS balance_total);
+END
+// DELIMITER ;
