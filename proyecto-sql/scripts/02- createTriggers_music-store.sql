@@ -1,17 +1,20 @@
 use musicstore;
 
 -- tabla de ventas con los productos vendidos (a partir de los pedidos que se reciben en formato json desde el front-end, se genera la tabla de ventas)
-create table if not exists ventas (
+CREATE TABLE IF NOT EXISTS ventas (
     id_venta INT NOT NULL AUTO_INCREMENT,
     id_pedido INT NOT NULL,
     id_usuario INT NOT NULL,
-    id_disco int not null,
-    cantidad int not null,
+    id_disco INT NOT NULL,
+    cantidad INT NOT NULL,
     fecha_venta DATE NOT NULL,
     PRIMARY KEY (id_venta),
-    FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario),
-    FOREIGN KEY (id_disco) REFERENCES discos (id_disco),
-    FOREIGN KEY (id_pedido) REFERENCES pedidos (id_pedido)
+    FOREIGN KEY (id_usuario)
+        REFERENCES usuarios (id_usuario),
+    FOREIGN KEY (id_disco)
+        REFERENCES discos (id_disco),
+    FOREIGN KEY (id_pedido)
+        REFERENCES pedidos (id_pedido)
 );
 -- trigger after insert de pedidos, generando la tabla de ventas
 DROP TRIGGER IF EXISTS tr_after_insertPedido_venta;

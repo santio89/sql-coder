@@ -1,6 +1,5 @@
 use musicstore;
 
-
 -- convertir precio de dolares (como el precio de los discos) a pesos argentinos
 -- uso ej: SELECT fn_precioPesos(2)
 DROP FUNCTION IF EXISTS fn_precioPesos;
@@ -15,7 +14,7 @@ END
 // DELIMITER ;
 
 
--- buscar cantidad de pedidos por pais
+-- buscar cantidad de pedidos por pais -> pedidos no es igual a items totales comprados, en cada pedido pueden haber varios items
 -- uso ej: SELECT fn_pedidosPais("ARGENTINA")
 DROP FUNCTION IF EXISTS fn_pedidosPais;
 DELIMITER //
@@ -28,7 +27,7 @@ END
 // DELIMITER ;
 
 
--- buscar cantidad de pedidos por usuario
+-- buscar cantidad de pedidos por usuario -> pedidos no es igual a items totales comprados, en cada pedido pueden haber varios items
 -- uso ej: SELECT fn_pedidosUsuario("juanpf@fake.com")
 DROP FUNCTION IF EXISTS fn_pedidosUsuario;
 DELIMITER //
@@ -43,7 +42,6 @@ END
 
 -- buscar cantidad de items (discos) comprados por usuario
 -- uso ej: SELECT fn_itemsUsuario("juanpf@fake.com") 
-
 DROP FUNCTION IF EXISTS fn_itemsUsuario;
 DELIMITER //
 CREATE FUNCTION fn_itemsUsuario (emailUsuario VARCHAR(100))
@@ -54,16 +52,27 @@ BEGIN
 END 
 // DELIMITER ;
 
-
--- buscar cantidad de items comprados por empleado, para stock
--- uso ej: SELECT fn_itemsEmpleadoStock("juangm123@fake.com") 
-DROP FUNCTION IF EXISTS fn_itemsEmpleadoStock;
+-- buscar cantidad de compras por empleado -> compras no es igual a items totales comprados, en cada compra pueden haber varios items
+-- uso ej: SELECT fn_comprasEmpleadoStock(12)
+DROP FUNCTION IF EXISTS fn_comprasEmpleadoStock;
 DELIMITER //
-CREATE FUNCTION fn_itemsEmpleadoStock (emailEmpleado VARCHAR(100))
+CREATE FUNCTION fn_comprasEmpleadoStock (idEmpleado int)
 RETURNS INT
 DETERMINISTIC
 BEGIN
-	RETURN (SELECT SUM(cantidad_compra) AS cantidad_itemsComprados FROM compras WHERE compras.comprado_por IN (SELECT empleados.id_empleado FROM empleados WHERE empleados.email=emailEmpleado));
+	RETURN (SELECT COUNT(compras.id_compra) FROM compras WHERE compras.comprado_por IN (SELECT empleados.id_empleado FROM empleados WHERE empleados.id_empleado=idEmpleado));
+END 
+// DELIMITER ;
+
+-- buscar cantidad de items comprados por empleado, para stock
+-- uso ej: SELECT fn_itemsEmpleadoStock(12) 
+DROP FUNCTION IF EXISTS fn_itemsEmpleadoStock;
+DELIMITER //
+CREATE FUNCTION fn_itemsEmpleadoStock (idEmpleado int)
+RETURNS INT
+DETERMINISTIC
+BEGIN
+	RETURN (SELECT SUM(cantidad_compra) AS cantidad_itemsComprados FROM compras WHERE compras.comprado_por IN (SELECT empleados.id_empleado FROM empleados WHERE empleados.id_empleado=idEmpleado));
 END 
 // DELIMITER ;
 

@@ -1,40 +1,40 @@
 USE MUSICSTORE;
 
 INSERT INTO empleados VALUES 
-(NULL, 24512812, "Juan", "Gomez", "juangm123@fake.com", "+545244912", "2010-01-02", "gerencia"),
-(NULL, 34515822, "Carlos", "Gomez", "juangm123@fake.com", "+545243915", "2010-01-01", "gerencia"),
-(NULL, 44512312, "Laura", "Perez", "juangm123@fake.com", "+545243415", "2010-01-01", "rrhh"),
-(NULL, 22712812, "Maria", "Guzman", "juangm123@fake.com", "+545143915", "2010-03-01", "rrhh"),
-(NULL, 20572812, "Veronica", "Piñeiro", "juangm123@fake.com", "+545343915", "2010-03-01", "tesoreria"),
-(NULL, 14512312, "Martin", "Reyes", "juangm123@fake.com", "+545243315", "2010-03-01", "tesoreria"),
-(NULL, 13412812, "Ricardo", "Gonzalez", "juangm123@fake.com", "+545263915", "2010-04-01", "sistemas"),
-(NULL, 14515312, "Mateo", "Oliva", "juangm123@fake.com", "+545247915", "2010-04-01", "sistemas"),
-(NULL, 22312202, "Matias", "Ruiz", "juangm123@fake.com", "+545233915", "2010-04-01", "ventas"),
-(NULL, 34612211, "Pedro", "Payeres", "juangm123@fake.com", "+545213915", "2010-07-01", "ventas"),
-(NULL, 21512112, "Lautaro", "Sanchez", "juangm123@fake.com", "+545243912", "2010-07-01", "ventas"),
-(NULL, 16312811, "Victoria", "Gonzalez", "juangm123@fake.com", "+545243913", "2010-07-01", "ventas"),
-(NULL, 15512812, "Mercedes", "Fernandez", "juangm123@fake.com", "+545243911", "2010-08-01", "ventas"),
-(NULL, 17312812, "Julieta", "Gomez", "juangm123@fake.com", "+545243917", "2010-08-01", "ventas"),
-(NULL, 19412812, "Juana", "Fernandez", "juangm123@fake.com", "+544243015", "2010-09-01", "ventas");
+(NULL, 24512812, "Juan", "Gomez", "juangm123@fake.com", "+545244912", "2010-01-02", "gerencia", 1),
+(NULL, 34515822, "Carlos", "Gomez", "juangm123@fake.com", "+545243915", "2010-01-01", "gerencia", 1),
+(NULL, 44512312, "Laura", "Perez", "juangm123@fake.com", "+545243415", "2010-01-01", "rrhh", 1),
+(NULL, 22712812, "Maria", "Guzman", "juangm123@fake.com", "+545143915", "2010-03-01", "rrhh", 1),
+(NULL, 20572812, "Veronica", "Piñeiro", "juangm123@fake.com", "+545343915", "2010-03-01", "tesoreria", 1),
+(NULL, 14512312, "Martin", "Reyes", "juangm123@fake.com", "+545243315", "2010-03-01", "tesoreria", 1),
+(NULL, 13412812, "Ricardo", "Gonzalez", "juangm123@fake.com", "+545263915", "2010-04-01", "sistemas", 1),
+(NULL, 14515312, "Mateo", "Oliva", "juangm123@fake.com", "+545247915", "2010-04-01", "sistemas", 1),
+(NULL, 22312202, "Matias", "Ruiz", "juangm123@fake.com", "+545233915", "2010-04-01", "ventas", 1),
+(NULL, 34612211, "Pedro", "Payeres", "juangm123@fake.com", "+545213915", "2010-07-01", "ventas", 1),
+(NULL, 21512112, "Lautaro", "Sanchez", "juangm123@fake.com", "+545243912", "2010-07-01", "ventas", 1),
+(NULL, 16312811, "Victoria", "Gonzalez", "juangm123@fake.com", "+545243913", "2010-07-01", "ventas", 1),
+(NULL, 15512812, "Mercedes", "Fernandez", "juangm123@fake.com", "+545243911", "2010-08-01", "ventas", 1),
+(NULL, 17312812, "Julieta", "Gomez", "juangm123@fake.com", "+545243917", "2010-08-01", "ventas", 1),
+(NULL, 19412812, "Juana", "Fernandez", "juangm123@fake.com", "+544243015", "2010-09-01", "ventas", 1);
 
 
 
 INSERT INTO usuarios VALUES 
-(NULL, "Juan Carlos", "Perez Figueroa", "juanpf@fake.com", "+544247945", "2022-03-25", "http://fake.com/avatarjuanpf01", "admin"),
-(NULL, "Maria Laura", "Gutierrez", "marial@fake.com", "+544143245", "2020-05-30", "http://fake.com/avatarmarial01", "user"),
-(NULL, "Santiago", "Guzman", "santiagog@fake.com", "+156247945", "2017-01-14", "http://fake.com/avatarsantiagog01", "user"),
-(NULL, "Esteban", "Gomez", "estebang@fake.com", "+544247599", "2018-11-12", "http://fake.com/avatarestebang01", "user"),
-(NULL, "Ricardo", "Ruben", "ricardor@fake.com", "+577567945", "2021-05-25", "http://fake.com/avatarricordr01", "user"),
-(NULL, "Juan Pedro", "Rivarola", "juanpr@fake.com", "+544242145", "2022-03-22", "http://fake.com/avatarjuanpr01", "admin"),
-(NULL, "Maria Cecilia", "Marconi", "mariac@fake.com", "+544143645", "2020-05-23", "http://fake.com/avatarmariam01", "user"),
-(NULL, "Santiago", "Gutierrez", "santiagogut@fake.com", "+156247945", "2018-01-16", "http://fake.com/avatarsantiagogut01", "user"),
-(NULL, "Federico", "Gomez", "federicog@fake.com", "+544547599", "2018-11-15", "http://fake.com/avatarfedericog01", "user"),
-(NULL, "Romina", "Rivarola", "rominar@fake.com", "+577554945", "2020-05-14", "http://fake.com/avatarrominar01", "user"),
-(NULL, "Juan Manuel", "Figueroa", "juanmf@fake.com", "+544212945", "2022-03-23", "http://fake.com/avatarjuanmf01", "admin"),
-(NULL, "Maria Laura", "Santillan", "marials@fake.com", "+544143245", "2021-11-12", "http://fake.com/avatarmarials01", "user"),
-(NULL, "Santiago", "Estebanez", "santiagog@fake.com", "+156297945", "2017-01-11", "http://fake.com/avatarsantiagoe01", "user"),
-(NULL, "Esteban", "Bale", "estebang@fake.com", "+544244599", "2018-11-11", "http://fake.com/avatarestebanb01", "user"),
-(NULL, "Ricardo", "Rubik", "ricardor@fake.com", "+577550945", "2021-05-21", "http://fake.com/avatarricordrbk01", "user");
+(NULL, "Juan Carlos", "Perez Figueroa", "juanpf@fake.com", "+544247945", "2022-03-25", "http://fake.com/avatarjuanpf01", "admin", 1),
+(NULL, "Maria Laura", "Gutierrez", "marial@fake.com", "+544143245", "2020-05-30", "http://fake.com/avatarmarial01", "user", 1),
+(NULL, "Santiago", "Guzman", "santiagog@fake.com", "+156247945", "2017-01-14", "http://fake.com/avatarsantiagog01", "user", 1),
+(NULL, "Esteban", "Gomez", "estebang@fake.com", "+544247599", "2018-11-12", "http://fake.com/avatarestebang01", "user", 1),
+(NULL, "Ricardo", "Ruben", "ricardor@fake.com", "+577567945", "2021-05-25", "http://fake.com/avatarricordr01", "user", 1),
+(NULL, "Juan Pedro", "Rivarola", "juanpr@fake.com", "+544242145", "2022-03-22", "http://fake.com/avatarjuanpr01", "admin", 1),
+(NULL, "Maria Cecilia", "Marconi", "mariac@fake.com", "+544143645", "2020-05-23", "http://fake.com/avatarmariam01", "user", 1),
+(NULL, "Santiago", "Gutierrez", "santiagogut@fake.com", "+156247945", "2018-01-16", "http://fake.com/avatarsantiagogut01", "user", 1),
+(NULL, "Federico", "Gomez", "federicog@fake.com", "+544547599", "2018-11-15", "http://fake.com/avatarfedericog01", "user", 1),
+(NULL, "Romina", "Rivarola", "rominar@fake.com", "+577554945", "2020-05-14", "http://fake.com/avatarrominar01", "user", 1),
+(NULL, "Juan Manuel", "Figueroa", "juanmf@fake.com", "+544212945", "2022-03-23", "http://fake.com/avatarjuanmf01", "admin", 1),
+(NULL, "Maria Laura", "Santillan", "marials@fake.com", "+544143245", "2021-11-12", "http://fake.com/avatarmarials01", "user", 1),
+(NULL, "Santiago", "Estebanez", "santiagog@fake.com", "+156297945", "2017-01-11", "http://fake.com/avatarsantiagoe01", "user", 1),
+(NULL, "Esteban", "Bale", "estebang@fake.com", "+544244599", "2018-11-11", "http://fake.com/avatarestebanb01", "user", 1),
+(NULL, "Ricardo", "Rubik", "ricardor@fake.com", "+577550945", "2021-05-21", "http://fake.com/avatarricordrbk01", "user", 1);
 
 
 INSERT INTO direcciones VALUES 
@@ -56,22 +56,21 @@ INSERT INTO direcciones VALUES
 
 
 INSERT INTO discos VALUES 
-(NULL, "Fear of the Dark", "Iron Maiden", "Descripcion Disco", "Rock", "EMI", "1992-01-01", 140, "2022-10-11"),
-(NULL, "Use Your Illussion I", "Guns N' Roses", "Descripcion Disco", "Rock", "Geffen Records", "1991-01-01", 120, "2021-10-11"),
-(NULL, "Use Your Illussion II", "Guns N' Roses", "Descripcion Disco", "Rock", "Geffen Records", "1991-01-01", 120, "2021-10-11"),
-(NULL, "Physical Graffiti", "Led Zeppelin", "Descripcion Disco", "Rock", "Swan Song", "1975-01-01", 90, "2020-12-07"),
-(NULL, "Star People", "Miles Davis", "Descripcion Disco", "Jazz", "Columbia", "1983-01-01", 80, "2020-01-09"),
-(NULL, "Stones", "Neil Diamond", "Descripcion Disco", "Rock", "MCA", "1980-01-01", 140, "2022-10-02"),
-(NULL, "Pretty Monster", "The Blue Stones", "Descripcion Disco", "Rock", "MNRK", "2022-01-01", 85, "2022-11-11"),
-(NULL, "Aftermath", "The Rolling Stones", "Descripcion Disco", "Rock", "ABKCO", "1966-01-01", 70, "2019-11-11"),
-(NULL, "Revolver", "The Beatles", "Descripcion Disco", "Rock", "Apple Records", "1966-01-01", 95, "2019-12-07"),
-(NULL, "Master of Puppets", "Metallica", "Descripcion Disco", "Metal", "Blackened", "1986-01-01", 90, "2020-01-09"),
-
-(NULL, "Backless", "Eric Clapton", "Descripcion Disco", "Rock", "RSO", "1978-01-01", 110, "2022-10-11"),
-(NULL, "Return of the Dream Canteen", "Red Hot Chili Peppers", "Descripcion Disco", "Rock", "Warner Records", "2022-01-01", 120, "2022-11-11"),
-(NULL, "Strictly Elvis", "Elvis Presley", "Descripcion Disco", "Rock", "RCA", "1965-01-01", 120, "2018-07-11"),
-(NULL, "Burning Desire", "Jimi Hendrix", "Descripcion Disco", "Rock", "Dagger Records", "2006-01-01", 90, "2021-05-04"),
-(NULL, "Rastaman Vibration", "Bob Marley & The Wailers", "Descripcion Disco", "Reggae", "Analogue Productions", "1976-01-01", 80, "2020-08-09");
+(NULL, "Fear of the Dark", "Iron Maiden", "Descripcion Disco", "Rock", "EMI", "1992-01-01", 140, "2022-10-11", 1),
+(NULL, "Use Your Illussion I", "Guns N' Roses", "Descripcion Disco", "Rock", "Geffen Records", "1991-01-01", 120, "2021-10-11", 1),
+(NULL, "Use Your Illussion II", "Guns N' Roses", "Descripcion Disco", "Rock", "Geffen Records", "1991-01-01", 120, "2021-10-11", 1),
+(NULL, "Physical Graffiti", "Led Zeppelin", "Descripcion Disco", "Rock", "Swan Song", "1975-01-01", 90, "2020-12-07", 1),
+(NULL, "Star People", "Miles Davis", "Descripcion Disco", "Jazz", "Columbia", "1983-01-01", 80, "2020-01-09", 1),
+(NULL, "Stones", "Neil Diamond", "Descripcion Disco", "Rock", "MCA", "1980-01-01", 140, "2022-10-02", 1),
+(NULL, "Pretty Monster", "The Blue Stones", "Descripcion Disco", "Rock", "MNRK", "2022-01-01", 85, "2022-11-11", 1),
+(NULL, "Aftermath", "The Rolling Stones", "Descripcion Disco", "Rock", "ABKCO", "1966-01-01", 70, "2019-11-11", 1),
+(NULL, "Revolver", "The Beatles", "Descripcion Disco", "Rock", "Apple Records", "1966-01-01", 95, "2019-12-07", 1),
+(NULL, "Master of Puppets", "Metallica", "Descripcion Disco", "Metal", "Blackened", "1986-01-01", 90, "2020-01-09", 1),
+(NULL, "Backless", "Eric Clapton", "Descripcion Disco", "Rock", "RSO", "1978-01-01", 110, "2022-10-11", 1),
+(NULL, "Return of the Dream Canteen", "Red Hot Chili Peppers", "Descripcion Disco", "Rock", "Warner Records", "2022-01-01", 120, "2022-11-11", 1),
+(NULL, "Strictly Elvis", "Elvis Presley", "Descripcion Disco", "Rock", "RCA", "1965-01-01", 120, "2018-07-11", 1),
+(NULL, "Burning Desire", "Jimi Hendrix", "Descripcion Disco", "Rock", "Dagger Records", "2006-01-01", 90, "2021-05-04", 1),
+(NULL, "Rastaman Vibration", "Bob Marley & The Wailers", "Descripcion Disco", "Reggae", "Analogue Productions", "1976-01-01", 80, "2020-08-09", 1);
 
 
 INSERT INTO stock VALUES 
@@ -142,25 +141,6 @@ INSERT INTO pedidos VALUES
 (NULL, 4, '[{"id": 11, "cant": 2}]', '2022-11-02'),
 (NULL, 2, '[{"id": 12, "cant": 1}, {"id": 7, "cant": 2}, {"id": 5, "cant": 1}]', '2022-11-21'),
 (NULL, 15, '[{"id": 14, "cant": 1}]', '2022-11-17');
-
-/*
-INSERT INTO ventas VALUES
-(NULL, 1, 1, 2, 2, "2023-01-01"),
-(NULL, 1, 1, 2, 1, "2022-12-02"),
-(NULL, 2, 4, 3, 3, "2023-01-02"),
-(NULL, 3, 3, 1, 2, "2023-01-14"),
-(NULL, 4, 1, 2, 4, "2022-11-02"),
-(NULL, 5, 2, 11, 1, "2023-01-03"),
-(NULL, 6, 3, 14, 1, "2022-12-02"),
-(NULL, 7, 6, 12, 2, "2022-11-02"),
-(NULL, 8, 7, 15, 4, "2023-01-12"),
-(NULL, 9, 9, 1, 5, "2022-11-02"),
-(NULL, 10, 11, 1, 2, "2022-08-22"),
-(NULL, 11, 1, 3, 1, "2023-01-17"),
-(NULL, 12, 3, 3, 3, "2022-11-02"),
-(NULL, 13, 2, 2, 2, "2022-11-21"),
-(NULL, 14, 4, 2, 1, "2023-01-01");
-*/
 
 INSERT INTO mensajes VALUES
 (NULL, 1, "Hola tengo una consulta", "2022-12-01 10:01:20"),

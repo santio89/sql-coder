@@ -13,6 +13,7 @@ email varchar (100) not null,
 telefono varchar (100) not null,
 fecha_alta date not null,
 sector varchar (100),
+active_status tinyint(1) not null,
 primary key (id_empleado)
 );
 
@@ -26,6 +27,7 @@ telefono varchar (100) not null,
 fecha_alta date not null,
 avatar_url varchar (100) not null,
 rol varchar (20) not null,
+active_status tinyint(1) not null,
 primary key (id_usuario)
 );
 
@@ -54,6 +56,7 @@ sello varchar (100) not null,
 fecha_album date not null,
 precio decimal not null,
 fecha_carga date not null,
+active_status tinyint(1) not null,
 primary key (id_disco)
 );
 
