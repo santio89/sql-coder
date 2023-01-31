@@ -1,24 +1,28 @@
 use musicstore;
 
--- buscar cantidad de usuarios por pais
+-- buscar cantidad de usuarios activos por pais
 CREATE OR REPLACE VIEW view_usuariosPais AS
     (SELECT 
         direcciones.pais,
-        COUNT(direcciones.id_usuario) AS cantidad_usuarios
+        COUNT(direcciones.id_usuario) AS cantidad_usuarios_activos
     FROM
         usuarios
             JOIN
         direcciones ON usuarios.id_usuario = direcciones.id_usuario
+	WHERE usuarios.active_status = 1
     GROUP BY direcciones.pais
     ORDER BY COUNT(direcciones.id_usuario) DESC);
+
+-- buscar cantidad de discos activos por genero
+CREATE OR REPLACE VIEW view_discosGeneros
+AS (SELECT genero, COUNT(*) as cantidad_discos_activos from discos where discos.active_status = 1 GROUP BY genero ORDER BY cantidad_discos_activos);
 
 
 -- buscar cantidad de mensajes por usuario
 CREATE OR REPLACE VIEW view_usuariosMensajes AS
     (SELECT 
         usuarios.id_usuario,
-        nombre,
-        apellido,
+        CONCAT(nombre, " ", apellido) as nombre_completo,
         COUNT(mensajes.id_usuario) AS cantidad_mensajes
     FROM
         usuarios
@@ -28,9 +32,9 @@ CREATE OR REPLACE VIEW view_usuariosMensajes AS
     ORDER BY cantidad_mensajes DESC);
 
 
--- buscar cantidad de pedidos por usuarios
+-- buscar cantidad de pedidos y discos comprados por usuarios
 CREATE OR REPLACE VIEW view_usuariosPedidos AS
-    (SELECT 
+    (SELECT usuariosPedidos_int.id_usuario, nombre_completo, cantidad_pedidos, SUM(ventas.cantidad) AS cantidad_discos, SUM(ventas.subtotal) as costo_total from (SELECT 
         usuarios.id_usuario,
         CONCAT(nombre, " ", apellido) as nombre_completo,
         COUNT(pedidos.id_usuario) AS cantidad_pedidos
@@ -38,19 +42,18 @@ CREATE OR REPLACE VIEW view_usuariosPedidos AS
         usuarios
             JOIN
         pedidos ON usuarios.id_usuario = pedidos.id_usuario
-    GROUP BY usuarios.id_usuario
-    ORDER BY COUNT(pedidos.id_usuario) DESC);
+    GROUP BY usuarios.id_usuario) as usuariosPedidos_int JOIN ventas on usuariosPedidos_int.id_usuario=ventas.id_usuario 
+    GROUP BY usuariosPedidos_int.id_usuario ORDER BY cantidad_discos DESC);
 
 
 -- buscar usuarios con sesiones activas. nota: en la realidad, las sesiones se irian anulando (NULL) a medida que expiran, y las activas deberian tener una fecha de expiracion actual (esto se realizaría dinámicamente desde un backend), pero para el ejemplo tomo los cryptId 'not null' como sesiones activas màs alla de la fecha.
 CREATE OR REPLACE VIEW view_sesionesActivas AS
     (SELECT 
         usuarios.id_usuario,
-        nombre,
-        apellido,
-        sesiones.fecha_creacion AS sesionCreacion,
-        sesiones.fecha_expiracion AS sesionExpiracion,
-        sesiones.sesionCryptId AS sesionCryptId
+        CONCAT(nombre, " ", apellido) as nombre_completo,
+        sesiones.fecha_creacion AS sesion_creacion,
+        sesiones.fecha_expiracion AS sesion_expiracion,
+        sesiones.sesionCryptId AS sesion_cryptId
     FROM
         usuarios
             JOIN
@@ -91,5 +94,5 @@ CREATE OR REPLACE VIEW view_totalComprado AS
 -- compras realizadas por empleados para stock
 CREATE OR REPLACE VIEW view_comprasEmpleados AS
 (
-	SELECT comprado_por AS id_empleado, CONCAT(empleados.nombre, " ", empleados.apellido) AS nombre_completo,COUNT(comprado_por) AS cantidad_compras, SUM(cantidad_compra) AS items_comprados, SUM(precio_compra_unit * cantidad_compra) AS costo_total FROM compras JOIN empleados ON compras.comprado_por = empleados.id_empleado GROUP BY comprado_por ORDER BY cantidad_compras DESC
+	SELECT comprado_por AS id_empleado, CONCAT(empleados.nombre, " ", empleados.apellido) AS nombre_completo,COUNT(comprado_por) AS cantidad_compras, SUM(cantidad_compra) AS cantidad_discos, SUM(precio_compra_unit * cantidad_compra) AS costo_total FROM compras JOIN empleados ON compras.comprado_por = empleados.id_empleado GROUP BY comprado_por ORDER BY cantidad_compras DESC
 )

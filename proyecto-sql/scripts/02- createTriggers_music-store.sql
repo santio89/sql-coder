@@ -6,7 +6,9 @@ CREATE TABLE IF NOT EXISTS ventas (
     id_pedido INT NOT NULL,
     id_usuario INT NOT NULL,
     id_disco INT NOT NULL,
+    precio_unit DECIMAL NOT NULL,
     cantidad INT NOT NULL,
+    subtotal DECIMAL NOT NULL,
     fecha_venta DATE NOT NULL,
     PRIMARY KEY (id_venta),
     FOREIGN KEY (id_usuario)
@@ -25,21 +27,22 @@ FOR EACH ROW
 BEGIN
 	DECLARE iddisco int;
     DECLARE cantidad int;
+    DECLARE precio decimal;
 
 	DECLARE i INT DEFAULT 0;
     WHILE i < JSON_LENGTH(new.productos) DO
         SELECT JSON_EXTRACT(new.productos, CONCAT('$[',i,'].id')) INTO iddisco;
         SELECT JSON_EXTRACT(new.productos, CONCAT('$[',i,'].cant')) INTO cantidad;
+        SELECT discos.precio from discos where discos.id_disco = iddisco INTO precio;
         
 		INSERT INTO ventas VALUES(
-		NULL, new.id_pedido, new.id_usuario, CAST(iddisco AS UNSIGNED), CAST(cantidad AS UNSIGNED), new.fecha_pedido
+		NULL, new.id_pedido, new.id_usuario, CAST(iddisco AS UNSIGNED), precio, CAST(cantidad AS UNSIGNED), cantidad*precio, new.fecha_pedido
 		);
 
         SET i = i + 1;
     END WHILE;
 END
 // DELIMITER ;
-
 
 -- tabla: log pedidos - trigger en before
 create table if not exists log_pedidos_before(
@@ -70,10 +73,10 @@ create table if not exists bkp_pedidos (
 );
 -- trigger after insert discos (tabla bkp_pedidos)
 DROP TRIGGER IF EXISTS tr_after_insertPedido_bkp;
-CREATE TRIGGER tr_after_insertDisco_bkp
+CREATE TRIGGER tr_after_insertPedido_bkp
 AFTER INSERT ON pedidos
 FOR EACH ROW
-INSERT INTO bkp_pedidos VALUES (null, new.id_pedido, new.id_usuario, new.productos, new.fecha_pedido);
+INSERT INTO bkp_pedidos VALUES (null, new.id_usuario, new.id_pedido, new.productos, new.fecha_pedido);
 
 
 -- tabla: log usuarios - before

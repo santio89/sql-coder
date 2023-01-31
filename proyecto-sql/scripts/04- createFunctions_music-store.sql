@@ -35,7 +35,7 @@ CREATE FUNCTION fn_pedidosUsuario (emailUsuario VARCHAR(100))
 RETURNS INT
 DETERMINISTIC
 BEGIN
-	RETURN (SELECT COUNT(pedidos.id_pedido) FROM pedidos WHERE pedidos.id_usuario IN (SELECT usuarios.id_usuario FROM usuarios WHERE usuarios.email=emailUsuario));
+	RETURN (SELECT cantidad_pedidos FROM view_usuariosPedidos WHERE view_usuariosPedidos.id_usuario IN (SELECT usuarios.id_usuario FROM usuarios WHERE usuarios.email=emailUsuario));
 END 
 // DELIMITER ;
 
@@ -48,7 +48,7 @@ CREATE FUNCTION fn_itemsUsuario (emailUsuario VARCHAR(100))
 RETURNS INT
 DETERMINISTIC
 BEGIN
-	RETURN (SELECT SUM(cantidad) FROM ventas WHERE ventas.id_usuario IN (SELECT usuarios.id_usuario FROM usuarios WHERE usuarios.email=emailUsuario));
+	RETURN (SELECT cantidad_discos FROM view_usuariosPedidos WHERE view_usuariosPedidos.id_usuario IN (SELECT usuarios.id_usuario FROM usuarios WHERE usuarios.email=emailUsuario));
 END 
 // DELIMITER ;
 
@@ -60,7 +60,7 @@ CREATE FUNCTION fn_comprasEmpleadoStock (idEmpleado int)
 RETURNS INT
 DETERMINISTIC
 BEGIN
-	RETURN (SELECT COUNT(compras.id_compra) FROM compras WHERE compras.comprado_por IN (SELECT empleados.id_empleado FROM empleados WHERE empleados.id_empleado=idEmpleado));
+	RETURN (SELECT COUNT(compras.id_compra) FROM compras WHERE compras.comprado_por = idEmpleado);
 END 
 // DELIMITER ;
 
@@ -72,7 +72,7 @@ CREATE FUNCTION fn_itemsEmpleadoStock (idEmpleado int)
 RETURNS INT
 DETERMINISTIC
 BEGIN
-	RETURN (SELECT SUM(cantidad_compra) AS cantidad_itemsComprados FROM compras WHERE compras.comprado_por IN (SELECT empleados.id_empleado FROM empleados WHERE empleados.id_empleado=idEmpleado));
+	RETURN (SELECT SUM(cantidad_compra) AS cantidad_itemsComprados FROM compras WHERE compras.comprado_por=idEmpleado);
 END 
 // DELIMITER ;
 
@@ -87,5 +87,30 @@ DETERMINISTIC
 
 BEGIN
 	RETURN (SELECT (SELECT total_vendido FROM view_totalVendido) - (SELECT total_comprado FROM view_totalComprado) AS balance_total);
+END
+// DELIMITER ;
+
+
+-- cantidad de usuarios activos
+-- uso ej: SELECT fn_usuariosActivos() as usuarios_activos
+DROP FUNCTION IF EXISTS fn_usuariosActivos;
+DELIMITER //
+CREATE FUNCTION fn_usuariosActivos()
+RETURNS INT
+DETERMINISTIC
+BEGIN
+	RETURN (SELECT COUNT(*) from usuarios where usuarios.active_status = 1);
+END
+// DELIMITER ;
+
+-- cantidad de discos activos
+-- uso ej: SELECT fn_discosActivos() as discos_activos
+DROP FUNCTION IF EXISTS fn_discosActivos;
+DELIMITER //
+CREATE FUNCTION fn_discosActivos()
+RETURNS INT
+DETERMINISTIC
+BEGIN
+	RETURN (SELECT COUNT(*) from discos where discos.active_status = 1);
 END
 // DELIMITER ;
