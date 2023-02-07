@@ -11,12 +11,9 @@ CREATE TABLE IF NOT EXISTS ventas (
     subtotal DECIMAL NOT NULL,
     fecha_venta DATE NOT NULL,
     PRIMARY KEY (id_venta),
-    FOREIGN KEY (id_usuario)
-        REFERENCES usuarios (id_usuario),
-    FOREIGN KEY (id_disco)
-        REFERENCES discos (id_disco),
-    FOREIGN KEY (id_pedido)
-        REFERENCES pedidos (id_pedido)
+    FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario),
+    FOREIGN KEY (id_disco) REFERENCES discos (id_disco),
+    FOREIGN KEY (id_pedido) REFERENCES pedidos (id_pedido)
 );
 -- trigger after insert de pedidos, generando la tabla de ventas
 DROP TRIGGER IF EXISTS tr_after_insertPedido_venta;
@@ -45,12 +42,12 @@ END
 // DELIMITER ;
 
 -- tabla: log pedidos - trigger en before
-create table if not exists log_pedidos_before(
-id_logPedidoBefore int not null auto_increment,
-timestamp_operation timestamp not null,
-operation varchar(10),
-hecho_por varchar(255),
-primary key (id_logPedidoBefore)
+CREATE TABLE IF NOT EXISTS log_pedidos_before(
+id_logPedidoBefore INT NOT NULL AUTO_INCREMENT,
+timestamp_operation TIMESTAMP NOT NULL,
+operation VARCHAR (10),
+hecho_por VARCHAR(255),
+PRIMARY KEY (id_logPedidoBefore)
 );
 --  tigger before insert en pedidos, generando logs
 DROP TRIGGER IF EXISTS tr_before_insertPedido_log;
@@ -61,7 +58,7 @@ INSERT INTO log_pedidos_before(timestamp_operation, operation, hecho_por) VALUES
 
 
 -- tabla: backup de la tabla pedidos al insertar (trigger en after)
-create table if not exists bkp_pedidos (
+CREATE TABLE IF NOT EXISTS bkp_pedidos (
 	id_pedidoBkp INT NOT NULL AUTO_INCREMENT,
     id_usuario INT NOT NULL,
 	id_pedido INT NOT NULL,
@@ -80,12 +77,12 @@ INSERT INTO bkp_pedidos VALUES (null, new.id_usuario, new.id_pedido, new.product
 
 
 -- tabla: log usuarios - before
-create table if not exists log_usuarios_before(
-id_logUsuarioBefore int not null auto_increment,
-timestamp_operation timestamp not null,
-operation varchar(10),
-hecho_por varchar(255),
-primary key (id_logUsuarioBefore)
+CREATE TABLE IF NOT EXISTS log_usuarios_before(
+id_logUsuarioBefore INT NOT NULL AUTO_INCREMENT,
+timestamp_operation TIMESTAMP NOT NULL,
+operation VARCHAR (10),
+hecho_por VARCHAR (255),
+PRIMARY KEY (id_logUsuarioBefore)
 );
 -- trigger before insert (tabla log_usuarios_before)
 DROP TRIGGER IF EXISTS tr_before_insertUsuario_log;
@@ -96,25 +93,26 @@ INSERT INTO log_usuarios_before (timestamp_operation, operation, hecho_por) VALU
 
 
 -- tabla: backup de la tabla usuarios al insertar (trigger en after)
-create table if not exists bkp_usuarios (
-id_usuarioBkp int not null auto_increment,
-id_usuario int not null,
-nombre varchar (100) not null,
-apellido varchar (100) not null,
-email varchar (100) not null,
-telefono varchar (100) not null,
-fecha_alta date not null,
-avatar_url varchar (100) not null,
-rol varchar (20) not null,
-primary key (id_usuarioBkp),
-foreign key (id_usuario) references usuarios (id_usuario)
+CREATE TABLE IF NOT EXISTS bkp_usuarios (
+id_usuarioBkp INT NOT NULL AUTO_INCREMENT,
+id_usuario INT NOT NULL,
+nombre VARCHAR (100) NOT NULL,
+apellido VARCHAR (100) NOT NULL,
+email VARCHAR (100) NOT NULL,
+telefono VARCHAR (100) NOT NULL,
+fecha_alta DATE NOT NULL,
+avatar_url VARCHAR (100) NOT NULL,
+rol VARCHAR (20) NOT NULL,
+active_status TINYINT (1) NOT NULL,
+PRIMARY KEY (id_usuarioBkp),
+FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario)
 );
 -- trigger after insert usuarios (tabla bkp_usuarios)
 DROP TRIGGER IF EXISTS tr_after_insertUsuario_bkp;
 CREATE TRIGGER tr_after_insertUsuario_bkp
 AFTER INSERT ON usuarios
 FOR EACH ROW
-INSERT INTO bkp_usuarios VALUES (null, new.id_usuario, new.nombre, new.apellido, new.email, new.telefono, new.fecha_alta, new.avatar_url, new.rol);
+INSERT INTO bkp_usuarios VALUES (null, new.id_usuario, new.nombre, new.apellido, new.email, new.telefono, new.fecha_alta, new.avatar_url, new.active_status, new.rol);
 
 
 -- tabla: log discos - before
@@ -145,6 +143,7 @@ sello varchar (100) not null,
 fecha_album date not null,
 precio decimal not null,
 fecha_carga date not null,
+active_status TINYINT (1) NOT NULL,
 primary key (id_discoBkp),
 foreign key (id_disco) references discos (id_disco)
 );
@@ -153,4 +152,4 @@ DROP TRIGGER IF EXISTS tr_after_insertDisco_bkp;
 CREATE TRIGGER tr_after_insertDisco_bkp
 AFTER INSERT ON discos
 FOR EACH ROW
-INSERT INTO bkp_discos VALUES (null, new.id_disco, new.nombre, new.banda, new.descripcion, new.genero, new.sello, new.fecha_album, new.precio, new.fecha_carga);
+INSERT INTO bkp_discos VALUES (null, new.id_disco, new.nombre, new.banda, new.descripcion, new.genero, new.sello, new.fecha_album, new.precio, new.fecha_carga, new.active_status);
