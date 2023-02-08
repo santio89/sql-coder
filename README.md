@@ -1,2 +1,2 @@
 # sql-coder
-SQL - Coderhouse
+SQL - Proyecto Coderhouse
