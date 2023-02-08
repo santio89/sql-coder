@@ -1,0 +1,4 @@
+DB - CARPETAS
+der: diagrama entidad-relación de la base de datos
+dumps: backups de la base de datos
+scripts: scripts para creación y configuración de la base de datos, así como inserción de datos. Leer orden_scripts.txt antes de correr los scripts

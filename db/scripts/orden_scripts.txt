@@ -1,4 +1,5 @@
-Orden de ejecución de scripts (carpeta scripts):
+Scripts para creación y configuración de la base datos, así como inserción de datos.
+Orden de ejecución:
 
 01- createTables_music-store.sql
 02- createTriggers_music-store.sql
