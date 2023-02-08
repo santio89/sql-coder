@@ -1,2 +1,2 @@
 # sql-coder
-SQL - Proyecto Coderhouse
+SQL - Proyecto Coderhouse: ECOMMERCE VENTA DE DISCOS (MUSICSTORE)
