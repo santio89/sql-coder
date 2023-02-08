@@ -1,6 +1,7 @@
 USE musicstore;
 
 -- buscar usuarios activos por pais
+-- uso ej: select * from vw_usuariosPais
 CREATE OR REPLACE VIEW vw_usuariosPais AS
     (SELECT 
         direcciones.pais,
@@ -10,12 +11,9 @@ CREATE OR REPLACE VIEW vw_usuariosPais AS
     GROUP BY direcciones.pais
     ORDER BY COUNT(direcciones.id_usuario) DESC);
 
--- buscar discos activos por genero
-CREATE OR REPLACE VIEW vw_discosGeneros
-AS (SELECT genero, COUNT(*) AS cantidad_discos_activos FROM discos WHERE discos.active_status = 1 GROUP BY genero ORDER BY cantidad_discos_activos);
-
 
 -- buscar cantidad de mensajes por usuario
+-- uso ej: select * from vw_usuariosMensajes
 CREATE OR REPLACE VIEW vw_usuariosMensajes AS
     (SELECT 
         usuarios.id_usuario,
@@ -27,6 +25,7 @@ CREATE OR REPLACE VIEW vw_usuariosMensajes AS
 
 
 -- buscar pedidos y discos comprados por usuarios
+-- uso ej: select * from vw_usuariosPedidos
 CREATE OR REPLACE VIEW vw_usuariosPedidos AS
     (SELECT usuariosPedidos_int.id_usuario, nombre_completo, cantidad_pedidos, SUM(ventas.cantidad) AS cantidad_discos, SUM(ventas.subtotal) as costo_total from (SELECT 
         usuarios.id_usuario,
@@ -38,6 +37,7 @@ CREATE OR REPLACE VIEW vw_usuariosPedidos AS
 
 
 -- buscar usuarios con sesiones activas. nota: en la realidad, las sesiones se irian anulando (NULL) a medida que expiran, y las activas deberian tener una fecha de expiracion actual (esto se realizaría dinámicamente desde un backend), pero para el ejemplo tomo los cryptId 'not null' como sesiones activas màs alla de la fecha.
+-- uso ej: select * from vw_sesionesActivas
 CREATE OR REPLACE VIEW vw_sesionesActivas AS
     (SELECT 
         usuarios.id_usuario,
@@ -49,13 +49,16 @@ CREATE OR REPLACE VIEW vw_sesionesActivas AS
     WHERE sesiones.sesionCryptId IS NOT NULL);
         
   -- buscar tabla ventas con detalle de precio y cantidad
+  -- uso ej: select * from vw_ventasDetalle
   CREATE OR REPLACE VIEW vw_ventasDetalle AS
-	(SELECT id_venta, id_pedido, id_usuario, discos.id_disco, discos.precio, cantidad, discos.precio*cantidad AS subtotal_venta 
+	(SELECT 
+    id_venta, id_pedido, id_usuario, discos.id_disco, discos.precio, cantidad, discos.precio*cantidad AS subtotal_venta 
     FROM ventas JOIN discos ON ventas.id_disco = discos.id_disco
     ORDER BY id_pedido
     );
 
 -- total vendido
+-- uso ej: select * from vw_totalVendido
 CREATE OR REPLACE VIEW vw_totalVendido AS
     (SELECT 
         COUNT(DISTINCT id_pedido) AS cantidad_pedidos,
@@ -64,6 +67,7 @@ CREATE OR REPLACE VIEW vw_totalVendido AS
     FROM ventas JOIN discos ON ventas.id_disco = discos.id_disco);
       
 -- total comprado para stock
+-- uso ej: select * from vw_totalComprado
 CREATE OR REPLACE VIEW vw_totalComprado AS
     (SELECT 
         COUNT(DISTINCT id_compra) AS cantidad_compras,
@@ -73,7 +77,32 @@ CREATE OR REPLACE VIEW vw_totalComprado AS
         
        
 -- compras realizadas por empleados para stock
+-- uso ej: select * from vw_comprasEmpleados
 CREATE OR REPLACE VIEW vw_comprasEmpleados AS
 (
-	SELECT comprado_por AS id_empleado, CONCAT(empleados.nombre, " ", empleados.apellido) AS nombre_completo,COUNT(comprado_por) AS cantidad_compras, SUM(cantidad_compra) AS cantidad_discos, SUM(precio_compra_unit * cantidad_compra) AS costo_total FROM compras JOIN empleados ON compras.comprado_por = empleados.id_empleado GROUP BY comprado_por ORDER BY cantidad_compras DESC
-)
+	SELECT 
+    comprado_por AS id_empleado, CONCAT(empleados.nombre, " ", empleados.apellido) AS nombre_completo,
+    COUNT(comprado_por) AS cantidad_compras, 
+    SUM(cantidad_compra) AS cantidad_discos, 
+    SUM(precio_compra_unit * cantidad_compra) AS costo_total 
+    FROM compras JOIN empleados ON compras.comprado_por = empleados.id_empleado 
+    GROUP BY comprado_por ORDER BY cantidad_compras DESC
+);
+
+
+-- buscar discos activos por genero musical
+-- uso ej: select * from vw_discosGeneros
+CREATE OR REPLACE VIEW vw_discosGeneros
+AS (SELECT 
+genero, COUNT(*) AS cantidad_discos_activos 
+FROM discos WHERE discos.active_status = 1 
+GROUP BY genero ORDER BY cantidad_discos_activos desc);
+
+
+-- buscar discos más vendidos
+-- uso ej: select * from vw_discosVendidos
+CREATE OR REPLACE VIEW vw_discosVendidos
+AS (
+SELECT ventas.id_disco, CONCAT(discos.banda, " - ", discos.nombre) AS disco, SUM(cantidad) AS discos_vendidos 
+FROM ventas JOIN discos ON ventas.id_disco=discos.id_disco 
+GROUP BY ventas.id_disco ORDER BY discos_vendidos DESC)
