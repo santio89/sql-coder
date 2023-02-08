@@ -1,6 +1,6 @@
-DROP SCHEMA IF EXISTS MusicStore;
-CREATE SCHEMA IF NOT EXISTS MusicStore;
-USE MusicStore;
+DROP SCHEMA IF EXISTS musicstore;
+CREATE SCHEMA IF NOT EXISTS musicstore;
+USE musicstore;
 
 
 -- tabla empleados, quienes gestionan compras y cargan productos a la plataforma online
@@ -13,7 +13,7 @@ email VARCHAR (100) NOT NULL,
 telefono VARCHAR (100) NOT NULL,
 fecha_alta DATE NOT NULL,
 sector VARCHAR (100),
-active_status TINYINT (1) NOT NULL,
+active_status TINYINT NOT NULL,
 PRIMARY KEY (id_empleado)
 );
 
@@ -27,7 +27,7 @@ telefono VARCHAR (100) NOT NULL,
 fecha_alta DATE NOT NULL,
 avatar_url VARCHAR (100) NOT NULL,
 rol VARCHAR (20) NOT NULL,
-active_status TINYINT (1) NOT NULL,
+active_status TINYINT NOT NULL,
 PRIMARY KEY (id_usuario)
 );
 
@@ -56,7 +56,7 @@ sello VARCHAR (100) NOT NULL,
 fecha_album DATE NOT NULL,
 precio DECIMAL NOT NULL,
 fecha_carga DATE NOT NULL,
-active_status TINYINT (1) NOT NULL,
+active_status TINYINT NOT NULL,
 PRIMARY KEY (id_disco)
 );
 
@@ -81,7 +81,7 @@ PRIMARY KEY (id_stock),
 FOREIGN KEY (id_disco) REFERENCES discos (id_disco) ON DELETE CASCADE
 );
 
--- tabla de carritos de la plataforma online con los productos que el usuario selecciona dentro de la pagina y antes de finalizar la compra.
+-- tabla de carritos de la plataforma online con los productos que el usuario selecciona dentro de la pagina y antes de finalizar la compra. Se usa el tipo de dato JSON, disponible a partir de la versión 5.7.8 de MySql.
 CREATE TABLE IF NOT EXISTS carritos (
 	id_carrito INT NOT NULL AUTO_INCREMENT,
     id_usuario INT NOT NULL,
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS carritos (
     FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario) ON DELETE CASCADE
 );
 
--- tabla de pedidos que recibe el sistema desde la plataforma online. al confirmar una orden, la informacion del carrito pasa al pedido,el carrito se vacia y el pedido pasa al sector de ventas quienes gestionaran el mismo.
+-- tabla de pedidos que recibe el sistema desde la plataforma online. al confirmar una orden, la informacion del carrito pasa al pedido,el carrito se vacia y el pedido pasa al sector de ventas quienes gestionaran el mismo. Se usa el tipo de dato JSON, disponible a partir de la versión 5.7.8 de MySql.
 CREATE TABLE IF NOT EXISTS pedidos (
     id_pedido INT NOT NULL AUTO_INCREMENT,
     id_usuario INT NOT NULL,

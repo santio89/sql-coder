@@ -1,0 +1,18 @@
+Orden de ejecución de scripts (carpeta scripts):
+
+01- createTables_music-store.sql
+02- createTriggers_music-store.sql
+03- createViews_music-store.sql
+04- createFunctions_music-store.sql
+05- createStoreProcedures_music-store.sql
+06- createUsers_music-store.sql
+07- insertValues_music-store.sql
+
+
+
+Nota: 
+Primero se crean la base de datos con todas sus tablas. Algunas tablas son creadas en el script de triggers ya que son las afectadas por los mismos.
+Luego, se crean views a partir de las tablas creadas.
+Seguido, se crean las funciones y store procedures que manipulan información de la bd.
+También se crean usuarios con distintos permisos.
+Por último, se cargan datos a la bd.

@@ -18,7 +18,6 @@ INSERT INTO empleados VALUES
 (NULL, 19412812, "Juana", "Fernandez", "juangm123@fake.com", "+544243015", "2010-09-01", "ventas", 1);
 
 
-
 INSERT INTO usuarios VALUES 
 (NULL, "Juan Carlos", "Perez Figueroa", "juanpf@fake.com", "+544247945", "2022-03-25", "http://fake.com/avatarjuanpf01", "admin", 1),
 (NULL, "Maria Laura", "Gutierrez", "marial@fake.com", "+544143245", "2020-05-30", "http://fake.com/avatarmarial01", "user", 1),
@@ -91,21 +90,21 @@ INSERT INTO stock VALUES
 (NULL, 15, 22);
 
 INSERT INTO compras VALUES
-(NULL, 1, 1000, 30, 9),
-(NULL, 2, 800, 22, 9),
-(NULL, 3, 500, 15, 10),
-(NULL, 4, 1000, 30, 11),
-(NULL, 5, 1000, 17, 10),
-(NULL, 6, 1000, 20, 12),
-(NULL, 7, 700, 23, 13),
-(NULL, 8, 1000, 30, 14),
-(NULL, 9, 1000, 10, 9),
-(NULL, 10, 600, 14, 11),
-(NULL, 11, 1000, 12, 12),
-(NULL, 12, 1000, 25, 15),
-(NULL, 13, 400, 30, 9),
-(NULL, 14, 1000, 30, 11),
-(NULL, 15, 900, 30, 14);
+(NULL, 1, 9, 1000, 30),
+(NULL, 2, 9, 800, 22),
+(NULL, 3, 10, 500, 15),
+(NULL, 4, 11, 1000, 30),
+(NULL, 5, 10, 1000, 17),
+(NULL, 6, 12, 1000, 20),
+(NULL, 7, 13, 700, 23),
+(NULL, 8, 14, 1000, 30),
+(NULL, 9, 9, 1000, 10),
+(NULL, 10, 11, 600, 14),
+(NULL, 11, 12, 1000, 12),
+(NULL, 12, 15, 1000, 25),
+(NULL, 13, 9, 400, 30),
+(NULL, 14, 11, 1000, 30),
+(NULL, 15, 14, 900, 30);
 
 
 INSERT INTO carritos VALUES

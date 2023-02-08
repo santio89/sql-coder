@@ -1,17 +1,17 @@
-use musicstore;
+USE musicstore;
 
 -- listar pedidos/ventas por usuario (ingresando email) 
 -- uso ej: call sp_ventasUsuario("juanpf@fake.com")
 DROP PROCEDURE IF EXISTS sp_ventasUsuario;
 DELIMITER //
-CREATE PROCEDURE sp_ventasUsuario (IN emailUsuario varchar(100))
+CREATE PROCEDURE sp_ventasUsuario (IN emailUsuario VARCHAR(100))
 BEGIN
-	SELECT id_usuario, email, id_pedido, discos.id_disco, CONCAT(discos.banda, " - ", discos.nombre) AS nombre_disco, cantidad, discos.precio as precio_unit, discos.precio*cantidad as subtotal, fecha_venta FROM
+	SELECT id_usuario, email, id_pedido, discos.id_disco, CONCAT(discos.banda, " - ", discos.nombre) AS nombre_disco, cantidad, discos.precio AS precio_unit, discos.precio*cantidad AS subtotal, fecha_venta FROM
 	(SELECT usuarios.id_usuario, usuarios.email, id_pedido, id_disco, cantidad, fecha_venta FROM ventas
     JOIN usuarios ON ventas.id_usuario=usuarios.id_usuario
     WHERE ventas.id_usuario IN 
     (SELECT id_usuario FROM usuarios WHERE usuarios.email=emailUsuario)) AS ventas_int
-    JOIN discos on ventas_int.id_disco=discos.id_disco;
+    JOIN discos ON ventas_int.id_disco=discos.id_disco;
 END 
 // DELIMITER ;
 
@@ -23,7 +23,7 @@ DELIMITER //
 CREATE PROCEDURE sp_comprasEmpleado (IN idEmpleado INT)
 BEGIN
 	SELECT id_compra, id_empleado, nombre_completo, compras_int.id_disco, CONCAT(discos.banda, " - ", discos.nombre) AS nombre_disco, cantidad_compra, precio_compra_unit, subtotal FROM
-	(SELECT id_compra, id_empleado, CONCAT(nombre, " ", apellido) as nombre_completo, id_disco, cantidad_compra, precio_compra_unit, cantidad_compra*precio_compra_unit as subtotal FROM compras
+	(SELECT id_compra, id_empleado, CONCAT(nombre, " ", apellido) as nombre_completo, id_disco, cantidad_compra, precio_compra_unit, cantidad_compra*precio_compra_unit AS subtotal FROM compras
     JOIN empleados ON compras.comprado_por=empleados.id_empleado
     WHERE compras.comprado_por IN 
     (SELECT id_empleado FROM empleados WHERE empleados.id_empleado=idEmpleado)) as compras_int

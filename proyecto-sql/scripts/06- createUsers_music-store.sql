@@ -1,13 +1,14 @@
-use mysql;
+USE mysql;
 
-drop user if exists "juanp@localhost";
-drop user if exists "marian@localhost";
+-- elimino los usuarios si existen
+DROP USER IF EXISTS "juanp@localhost";
+DROP USER IF EXISTS "marian@localhost";
 
 -- creo usuarios
-create user "juanp@localhost" identified by "pasS13!";
-create user "marian@localhost" identified by "paSs27$";
+CREATE USER "juanp@localhost" IDENTIFIED BY "pasS13!";
+CREATE USER "marian@localhost" IDENTIFIED BY "paSs27$";
 
 -- doy permisos a todas las tablas en la bd
-grant select on musicstore.* to "juanp@localhost";
-grant select, insert, update on musicstore.* to "marian@localhost";
+GRANT SELECT ON musicstore.* TO "juanp@localhost";
+GRANT SELECT, INSERT, UPDATE ON musicstore.* TO "marian@localhost";
 

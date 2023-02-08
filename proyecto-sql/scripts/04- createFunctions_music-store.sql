@@ -1,4 +1,4 @@
-use musicstore;
+USE musicstore;
 
 -- convertir precio de dolares (como el precio de los discos) a pesos argentinos
 -- uso ej: SELECT fn_precioPesos(2)
@@ -35,7 +35,7 @@ CREATE FUNCTION fn_pedidosUsuario (emailUsuario VARCHAR(100))
 RETURNS INT
 DETERMINISTIC
 BEGIN
-	RETURN (SELECT cantidad_pedidos FROM view_usuariosPedidos WHERE view_usuariosPedidos.id_usuario IN (SELECT usuarios.id_usuario FROM usuarios WHERE usuarios.email=emailUsuario));
+	RETURN (SELECT cantidad_pedidos FROM vw_usuariosPedidos WHERE vw_usuariosPedidos.id_usuario IN (SELECT usuarios.id_usuario FROM usuarios WHERE usuarios.email=emailUsuario));
 END 
 // DELIMITER ;
 
@@ -48,7 +48,7 @@ CREATE FUNCTION fn_itemsUsuario (emailUsuario VARCHAR(100))
 RETURNS INT
 DETERMINISTIC
 BEGIN
-	RETURN (SELECT cantidad_discos FROM view_usuariosPedidos WHERE view_usuariosPedidos.id_usuario IN (SELECT usuarios.id_usuario FROM usuarios WHERE usuarios.email=emailUsuario));
+	RETURN (SELECT cantidad_discos FROM vw_usuariosPedidos WHERE vw_usuariosPedidos.id_usuario IN (SELECT usuarios.id_usuario FROM usuarios WHERE usuarios.email=emailUsuario));
 END 
 // DELIMITER ;
 
@@ -86,7 +86,7 @@ RETURNS DECIMAL
 DETERMINISTIC
 
 BEGIN
-	RETURN (SELECT (SELECT total_vendido FROM view_totalVendido) - (SELECT total_comprado FROM view_totalComprado) AS balance_total);
+	RETURN (SELECT (SELECT total_vendido FROM vw_totalVendido) - (SELECT total_comprado FROM vw_totalComprado) AS balance_total);
 END
 // DELIMITER ;
 
