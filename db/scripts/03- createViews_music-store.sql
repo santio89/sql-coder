@@ -1,6 +1,6 @@
 USE musicstore;
 
--- buscar usuarios activos por pais
+-- usuarios activos por pais
 -- uso ej: select * from vw_usuariosPais
 CREATE OR REPLACE VIEW vw_usuariosPais AS
     (SELECT 
@@ -12,7 +12,7 @@ CREATE OR REPLACE VIEW vw_usuariosPais AS
     ORDER BY COUNT(direcciones.id_usuario) DESC);
 
 
--- buscar cantidad de mensajes por usuario
+-- cantidad de mensajes por usuario
 -- uso ej: select * from vw_usuariosMensajes
 CREATE OR REPLACE VIEW vw_usuariosMensajes AS
     (SELECT 
@@ -24,7 +24,7 @@ CREATE OR REPLACE VIEW vw_usuariosMensajes AS
     ORDER BY cantidad_mensajes DESC);
 
 
--- buscar pedidos y discos comprados por usuarios
+-- pedidos y discos comprados por usuarios
 -- uso ej: select * from vw_usuariosPedidos
 CREATE OR REPLACE VIEW vw_usuariosPedidos AS
     (SELECT usuariosPedidos_int.id_usuario, nombre_completo, cantidad_pedidos, SUM(ventas.cantidad) AS cantidad_discos, SUM(ventas.subtotal) as costo_total from (SELECT 
@@ -36,7 +36,7 @@ CREATE OR REPLACE VIEW vw_usuariosPedidos AS
     GROUP BY usuariosPedidos_int.id_usuario ORDER BY cantidad_discos DESC);
 
 
--- buscar usuarios con sesiones activas. nota: en la realidad, las sesiones se irian anulando (NULL) a medida que expiran, y las activas deberian tener una fecha de expiracion actual (esto se realizaría dinámicamente desde un backend), pero para el ejemplo tomo los cryptId 'not null' como sesiones activas màs alla de la fecha.
+-- usuarios con sesiones activas. nota: en la realidad, las sesiones se irían anulando (NULL) a medida que expiran, y las activas deberían tener una fecha de expiración actual (esto se realizaría dinámicamente desde un backend), pero para el ejemplo tomo los cryptId 'not null' como sesiones activas más alla de la fecha.
 -- uso ej: select * from vw_sesionesActivas
 CREATE OR REPLACE VIEW vw_sesionesActivas AS
     (SELECT 
@@ -48,7 +48,7 @@ CREATE OR REPLACE VIEW vw_sesionesActivas AS
     FROM usuarios JOIN sesiones ON usuarios.id_usuario = sesiones.id_usuario
     WHERE sesiones.sesionCryptId IS NOT NULL);
         
-  -- buscar tabla ventas con detalle de precio y cantidad
+  -- ventas con detalle de precio y cantidad
   -- uso ej: select * from vw_ventasDetalle
   CREATE OR REPLACE VIEW vw_ventasDetalle AS
 	(SELECT 
@@ -90,7 +90,7 @@ CREATE OR REPLACE VIEW vw_comprasEmpleados AS
 );
 
 
--- buscar discos activos por genero musical
+-- discos activos por genero musical
 -- uso ej: select * from vw_discosGeneros
 CREATE OR REPLACE VIEW vw_discosGeneros
 AS (SELECT 
@@ -99,7 +99,7 @@ FROM discos WHERE discos.active_status = 1
 GROUP BY genero ORDER BY cantidad_discos_activos desc);
 
 
--- buscar discos más vendidos
+-- discos más vendidos
 -- uso ej: select * from vw_discosVendidos
 CREATE OR REPLACE VIEW vw_discosVendidos
 AS (

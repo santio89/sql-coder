@@ -52,7 +52,7 @@ BEGIN
 END 
 // DELIMITER ;
 
--- buscar cantidad de compras por empleado -> compras no es igual a items totales comprados, en cada compra pueden haber varios items
+-- calcular cantidad de compras por empleado -> compras no es igual a items totales comprados, en cada compra pueden haber varios items
 -- uso ej: SELECT fn_comprasEmpleadoStock(12)
 DROP FUNCTION IF EXISTS fn_comprasEmpleadoStock;
 DELIMITER //
@@ -64,7 +64,7 @@ BEGIN
 END 
 // DELIMITER ;
 
--- buscar cantidad de items comprados por empleado, para stock
+-- calcular cantidad de items comprados por empleado, para stock
 -- uso ej: SELECT fn_itemsEmpleadoStock(12) 
 DROP FUNCTION IF EXISTS fn_itemsEmpleadoStock;
 DELIMITER //
@@ -91,7 +91,7 @@ END
 // DELIMITER ;
 
 
--- cantidad de usuarios activos
+-- calcular cantidad de usuarios activos
 -- uso ej: SELECT fn_usuariosActivos() as usuarios_activos
 DROP FUNCTION IF EXISTS fn_usuariosActivos;
 DELIMITER //
@@ -103,7 +103,7 @@ BEGIN
 END
 // DELIMITER ;
 
--- cantidad de discos activos
+-- calcular cantidad de discos activos
 -- uso ej: SELECT fn_discosActivos() as discos_activos
 DROP FUNCTION IF EXISTS fn_discosActivos;
 DELIMITER //

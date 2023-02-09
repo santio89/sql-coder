@@ -1,6 +1,6 @@
 USE musicstore;
 
--- tabla de ventas con los productos vendidos (a partir de los pedidos que se reciben en formato json desde el front-end, se genera la tabla de ventas).
+-- tabla: ventas, con los productos vendidos (a partir de los pedidos que se reciben en formato json desde el front-end, se genera la tabla de ventas).
 CREATE TABLE IF NOT EXISTS ventas (
     id_venta INT NOT NULL AUTO_INCREMENT,
     id_pedido INT NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS ventas (
     FOREIGN KEY (id_disco) REFERENCES discos (id_disco),
     FOREIGN KEY (id_pedido) REFERENCES pedidos (id_pedido)
 );
--- trigger after insert de pedidos, generando la tabla de ventas. Se usa la función JSON_EXTRACT junto con el tipo de dato JSON, disponibles a parti de la versión 5.7.8 de MySql
+-- trigger after insert de pedidos, generando la tabla de ventas. Se usa la función JSON_EXTRACT junto con el tipo de dato JSON, disponibles a partir de la versión 5.7.8 de MySql
 DROP TRIGGER IF EXISTS tr_after_insertPedido_venta;
 DELIMITER //
 CREATE TRIGGER tr_after_insertPedido_venta
@@ -41,7 +41,7 @@ BEGIN
 END
 // DELIMITER ;
 
--- tabla: log pedidos - trigger en before
+-- tabla: logs de pedidos (para auditoría)
 CREATE TABLE IF NOT EXISTS log_pedidos_before(
 id_logPedidoBefore INT NOT NULL AUTO_INCREMENT,
 timestamp_operation TIMESTAMP NOT NULL,
@@ -49,7 +49,7 @@ operation VARCHAR (10),
 hecho_por VARCHAR(255),
 PRIMARY KEY (id_logPedidoBefore)
 );
---  tigger before insert en pedidos, generando logs
+-- trigger before insert en pedidos, generando logs de pedidos (para auditoría)
 DROP TRIGGER IF EXISTS tr_before_insertPedido_log;
 CREATE TRIGGER tr_before_insertPedido_log
 BEFORE INSERT ON pedidos
@@ -57,7 +57,7 @@ FOR EACH ROW
 INSERT INTO log_pedidos_before(timestamp_operation, operation, hecho_por) VALUES (now(), "INSERT", user());
 
 
--- tabla: backup de la tabla pedidos al insertar (trigger en after)
+-- tabla: backup de la tabla pedidos 
 CREATE TABLE IF NOT EXISTS bkp_pedidos (
 	id_pedidoBkp INT NOT NULL AUTO_INCREMENT,
     id_usuario INT NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS bkp_pedidos (
     FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario),
     FOREIGN KEY (id_pedido) REFERENCES pedidos (id_pedido)
 );
--- trigger after insert discos (tabla bkp_pedidos)
+-- trigger after insert discos, generando backups de discos
 DROP TRIGGER IF EXISTS tr_after_insertPedido_bkp;
 CREATE TRIGGER tr_after_insertPedido_bkp
 AFTER INSERT ON pedidos
@@ -76,7 +76,7 @@ FOR EACH ROW
 INSERT INTO bkp_pedidos VALUES (NULL, NEW.id_usuario, NEW.id_pedido, NEW.productos, NEW.fecha_pedido);
 
 
--- tabla: log usuarios - before
+-- tabla: logs de usuarios (para auditoría)
 CREATE TABLE IF NOT EXISTS log_usuarios_before(
 id_logUsuarioBefore INT NOT NULL AUTO_INCREMENT,
 timestamp_operation TIMESTAMP NOT NULL,
@@ -84,7 +84,7 @@ operation VARCHAR (10),
 hecho_por VARCHAR (255),
 PRIMARY KEY (id_logUsuarioBefore)
 );
--- trigger before insert (tabla log_usuarios_before)
+-- trigger before insert, generando logs de usuarios (para auditoría)
 DROP TRIGGER IF EXISTS tr_before_insertUsuario_log;
 CREATE TRIGGER tr_before_insertUsuario_log
 BEFORE INSERT ON usuarios
@@ -92,7 +92,7 @@ FOR EACH ROW
 INSERT INTO log_usuarios_before (timestamp_operation, operation, hecho_por) VALUES (now(), "INSERT", USER());
 
 
--- tabla: backup de la tabla usuarios al insertar (trigger en after)
+-- tabla: backup de la tabla usuarios
 CREATE TABLE IF NOT EXISTS bkp_usuarios (
 id_usuarioBkp INT NOT NULL AUTO_INCREMENT,
 id_usuario INT NOT NULL,
@@ -107,7 +107,7 @@ active_status TINYINT NOT NULL,
 PRIMARY KEY (id_usuarioBkp),
 FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario)
 );
--- trigger after insert usuarios (tabla bkp_usuarios)
+-- trigger after insert usuarios, generando backups de usuarios
 DROP TRIGGER IF EXISTS tr_after_insertUsuario_bkp;
 CREATE TRIGGER tr_after_insertUsuario_bkp
 AFTER INSERT ON usuarios
@@ -115,7 +115,7 @@ FOR EACH ROW
 INSERT INTO bkp_usuarios VALUES (NULL, NEW.id_usuario, NEW.nombre, NEW.apellido, NEW.email, NEW.telefono, NEW.fecha_alta, NEW.avatar_url, NEW.rol, NEW.active_status);
 
 
--- tabla: log discos - before
+-- tabla: logs de discos (para auditoría)
 CREATE TABLE IF NOT EXISTS log_discos_before(
 id_logDiscoBefore INT NOT NULL AUTO_INCREMENT,
 timestamp_operation TIMESTAMP NOT NULL,
@@ -123,7 +123,7 @@ operation VARCHAR (10),
 hecho_por VARCHAR (255),
 PRIMARY KEY (id_logDiscoBefore)
 );
--- trigger before insert (tabla log_discos_before)
+-- trigger before insert, generando logs de discos (para auditoría)
 DROP TRIGGER IF EXISTS tr_before_insertDisco_log;
 CREATE TRIGGER tr_before_insertDisco_log
 BEFORE INSERT ON usuarios
@@ -131,7 +131,7 @@ FOR EACH ROW
 INSERT INTO log_discos_before (timestamp_operation, operation, hecho_por) VALUES (now(), "INSERT", user());
 
 
--- tabla: backup de la tabla discos al insertar (trigger en after)
+-- tabla: backup de la tabla discos 
 CREATE TABLE IF NOT EXISTS bkp_discos (
 id_discoBkp INT NOT NULL AUTO_INCREMENT,
 id_disco INT NOT NULL,
@@ -147,7 +147,7 @@ active_status TINYINT NOT NULL,
 PRIMARY KEY (id_discoBkp),
 FOREIGN KEY (id_disco) REFERENCES discos (id_disco)
 );
--- trigger after insert discos (tabla bkp_discos)
+-- trigger after insert discos, generando backups de discos
 DROP TRIGGER IF EXISTS tr_after_insertDisco_bkp;
 CREATE TRIGGER tr_after_insertDisco_bkp
 AFTER INSERT ON discos

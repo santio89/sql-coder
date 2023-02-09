@@ -31,7 +31,7 @@ BEGIN
 END 
 // DELIMITER ;
 
--- ordena tabla según campo y orden ingresados
+-- ordena tabla (ingresando nombre de tabla, campo a ordenar, y tipo de orden (ASC/DESC))
 -- uso ej: call sp_ordenTabla("usuarios", "apellido", "ASC")
 DROP PROCEDURE IF EXISTS sp_ordenTabla;
 DELIMITER //
@@ -48,7 +48,7 @@ BEGIN
 END
 // DELIMITER ;
 
--- insertar disco en tabla discos
+-- insertar disco en tabla discos (ingresando la información del disco)
 -- ej uso: call sp_insertarDisco("Test", "Test", "Descripcion Disco", "Metal", "Blackened", "1986-01-01", 90)
 DROP PROCEDURE IF EXISTS sp_insertarDisco;
 DELIMITER //
@@ -59,7 +59,7 @@ BEGIN
 END
 // DELIMITER ;
 
--- insertar usuario en tabla usuarios
+-- insertar usuario en tabla usuarios (ingresando la información del usuario)
 -- ej uso: call sp_insertarUsuario("Richard", "Fortus", "richf@fake.com", "+544153143", "http://fake.com/avatarrichf01", "user")
 DROP PROCEDURE IF EXISTS sp_insertarUsuario;
 DELIMITER //
@@ -70,7 +70,7 @@ BEGIN
 END
 // DELIMITER ;
 
--- insertar empleado en tabla empleados
+-- insertar empleado en tabla empleados (ingresando la información del empleado)
 -- ej uso: call sp_insertarEmpleado(29512212, "Peter", "Griffin", "peterg@fake.com", "+545225917", "ventas")
 DROP PROCEDURE IF EXISTS sp_insertarEmpleado;
 DELIMITER //
@@ -81,7 +81,7 @@ BEGIN
 END
 // DELIMITER ;
 
--- desactivar disco de tabla discos, segun id
+-- desactivar disco de tabla discos (ingresando id de disco)
 -- ej uso: call sp_desactivarDisco(1)
 -- es recomendado desactivar los productos en vez de eliminarlos, en la mayoría de casos
 DROP PROCEDURE IF EXISTS sp_desactivarDisco;
@@ -92,7 +92,7 @@ BEGIN
 END
 // DELIMITER ;
 
--- desactivar usuario de tabla usuarios, segun id
+-- desactivar usuario de tabla usuarios (ingresando id de usuario)
 -- ej uso: call sp_desactivarUsuario(1)
 -- es recomendado desactivar los usuarios en vez de eliminarlos, en la mayoría de casos
 DROP PROCEDURE IF EXISTS sp_desactivarUsuario;
@@ -103,7 +103,7 @@ BEGIN
 END
 // DELIMITER ;
 
--- desactivar empleado de tabla empleados, segun id
+-- desactivar empleado de tabla empleados (ingresando id de empleado)
 -- ej uso: call sp_desactivarEmpleado(1)
 -- es recomendado desactivar los empleados en vez de eliminarlos, en la mayoría de casos
 DROP PROCEDURE IF EXISTS sp_desactivarEmpleado;
@@ -114,7 +114,7 @@ BEGIN
 END
 // DELIMITER ;
 
--- activar disco de tabla discos, segun id
+-- activar disco de tabla discos (ingresando id de disco)
 -- ej uso: call sp_activarDisco(1)
 -- en caso que haya desactivado un disco y quisiera volver a activarlo
 DROP PROCEDURE IF EXISTS sp_activarDisco;
@@ -125,7 +125,7 @@ BEGIN
 END
 // DELIMITER ;
 
--- activar usuario de tabla usuarios, segun id
+-- activar usuario de tabla usuarios (ingresando id de usuario)
 -- ej uso: call sp_activarDisco(1)
 -- en caso que haya desactivado un usuario y quisiera volver a activarlo
 DROP PROCEDURE IF EXISTS sp_activarUsuario;
@@ -136,7 +136,7 @@ BEGIN
 END
 // DELIMITER ;
 
--- activar empleado de tabla empleados, segun id
+-- activar empleado de tabla empleados (ingresando id de empleado)
 -- ej uso: call sp_activarEmpleado(1)
 -- en caso que haya desactivado un empleado y quisiera volver a activarlo
 DROP PROCEDURE IF EXISTS sp_activarEmpleado;
@@ -148,28 +148,28 @@ END
 // DELIMITER ;
 
 
--- eliminar disco de tabla discos, segun id
+-- eliminar disco de tabla discos (ingresando id de disco)
 -- ej uso: call sp_eliminarDisco(17)
 -- nota: eliminar disco sería en casos muy específicos. Lo normal sería 'desactivar' el producto así no hay conflictos con tablas históricas que dependan de estos valores
 DROP PROCEDURE IF EXISTS sp_eliminarDisco;
 DELIMITER //
 CREATE PROCEDURE sp_eliminarDisco (IN discoId INT)
 BEGIN
-	-- seteo foreign_key_checks para poder eliminar discos al margen de que otras tablas, por ej compras, dependan de esta. No pongo 'on delete cascade' en tablas como compras, porque al margen que yo borre un disco, me interesa que el historial de compras igual muestre el id original de quien realizo la operacion. Este id no deberia volver a re-utilizarse igualmente a pesar de ingresar nuevos datos debido al auto increment.
+	-- seteo foreign_key_checks para poder eliminar discos al margen de que otras tablas, por ej compras, dependan de esta. No pongo 'on delete cascade' en tablas como compras, porque al margen que yo borre un disco, me interesa que el historial de compras igual muestre el id original de quien realizó la operación. Este id no debería volver a re-utilizarse igualmente a pesar de ingresar nuevos datos debido al auto increment.
 	SET foreign_key_checks = 0;
 	DELETE FROM discos WHERE id_disco = discoId;
     SET foreign_key_checks = 1;
 END
 // DELIMITER ;
 
--- eliminar usuario de tabla usuarios, segun id
+-- eliminar usuario de tabla usuarios (ingresando id de usuario)
 -- ej uso: call sp_eliminarUsuario(14)
 -- nota: eliminar usuario sería en casos muy específicos. Lo normal sería 'desactivar' el usuario así no hay conflictos con tablas históricas que dependan de estos valores
 DROP PROCEDURE IF EXISTS sp_eliminarUsuario;
 DELIMITER //
 CREATE PROCEDURE sp_eliminarUsuario (IN usuarioId INT)
 BEGIN
-	-- seteo foreign_key_checks para poder eliminar usuarios al margen de que otras tablas, por ej pedidos, dependan de esta. No pongo 'on delete cascade' en tablas como pedidos, porque al margen que yo borre un usuario, me interesa que el historial de pedidos igual muestre el id original de quien realizo la operacion. Este id no deberia volver a re-utilizarse igualmente a pesar de ingresar nuevos datos debido al auto increment.
+	-- seteo foreign_key_checks para poder eliminar usuarios al margen de que otras tablas, por ej pedidos, dependan de esta. No pongo 'on delete cascade' en tablas como pedidos, porque al margen que yo borre un usuario, me interesa que el historial de pedidos igual muestre el id original de quien realizó la operación. Este id no debería volver a re-utilizarse igualmente a pesar de ingresar nuevos datos debido al auto increment.
 	SET foreign_key_checks = 0;
 	DELETE FROM usuarios WHERE id_usuario = usuarioId;
     SET foreign_key_checks = 1;
@@ -184,7 +184,7 @@ DROP PROCEDURE IF EXISTS sp_eliminarEmpleado;
 DELIMITER //
 CREATE PROCEDURE sp_eliminarEmpleado (IN empleadoId INT)
 BEGIN
-	-- seteo foreign_key_checks para poder eliminar empleados al margen de que otras tablas, por ej compras, dependan de esta. No pongo 'on delete cascade' en tablas como compras, porque al margen que yo borre un empleado, me interesa que el historial de pedidos igual muestre el id original de quien realizo la operacion. Este id no deberia volver a re-utilizarse igualmente a pesar de ingresar nuevos datos debido al auto increment.
+	-- seteo foreign_key_checks para poder eliminar empleados al margen de que otras tablas, por ej compras, dependan de esta. No pongo 'on delete cascade' en tablas como compras, porque al margen que yo borre un empleado, me interesa que el historial de pedidos igual muestre el id original de quien realizó la operación. Este id no debería volver a re-utilizarse igualmente a pesar de ingresar nuevos datos debido al auto increment.
 	SET foreign_key_checks = 0;
 	DELETE FROM empleados WHERE id_empleado = empleadoId;
     SET foreign_key_checks = 1;
